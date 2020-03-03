@@ -8,8 +8,17 @@ const Product = require('./product')
  *
  *    BlogPost.belongsTo(User)
  */
+//belongs to many association to create cart
+User.belongsToMany(Product, {through: 'cart'})
+Product.belongsToMany(User, {through: 'cart'})
 
-User.belongsToMany(Product,{ through: 'cart'})
+//puts the user id on the order, can use getOrders methods on User to find previous orders
+Order.belongsTo(User)
+User.hasMany(Order)
+
+// can use GetProducts method  on Order to find order history of a specific order
+Order.hasMany(Product)
+
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
