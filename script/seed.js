@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Product, Order} = require('../server/db/models')
+const {User, Product, Order, Cart} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -54,22 +54,23 @@ async function seed() {
     shippingInfo: 'The Knaves, Duke Street, Stanton, MA, 39135'
   })
 
-  //Establishing order history
+  //Establishing a user's order history
   //2 of the orders belong to one of the users
   // 1 of the orders belongs to the other user
-  await user1.addOrders([order1, order2]) // userIDs are on the order Instances. Should this be the other way around?
+  await user1.addOrders([order1, order2]) // userIDs are on the order Instances.
   await user2.addOrder(order3)
 
   //Establishing cart through table
   //2 products belong to a user
   // one product belongs to a user several times
   await user2.addProducts([prod1, prod2])
+
   //await user1.addProducts([prod3, prod3, prod3]); // cannot add multiple instances on a many to many table. Therefore cannot add 2+ products of the same item for one user
 
   //Associating products onto an order
   // Put one product onto an order
-  await order2.addProducts([prod2, prod1])
-  await order1.addProducts([prod2, prod1]) //puts orderID onto product object. Only adds 1 order per product.  Should this be the other way around?
+  //await order2.addProducts([prod2, prod1]);
+  // await order1.addProducts([prod2, prod1]); //puts orderID onto product object. Only adds 1 order per product.  Should this be the other way around?
 
   // console.log(
   //   `seeded ${users.length} users`,
