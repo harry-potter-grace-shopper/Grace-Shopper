@@ -5,9 +5,6 @@ const Order = db.define('order', {
   productsId: {
     type: Sequelize.ARRAY(Sequelize.INTEGER)
   },
-  quantity: {
-    type: Sequelize.INTEGER
-  },
   totalCost: {
     type: Sequelize.DECIMAL
   },
