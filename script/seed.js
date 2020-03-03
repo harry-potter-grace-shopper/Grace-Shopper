@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Product, Order} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -12,7 +12,37 @@ async function seed() {
     User.create({email: 'murphy@email.com', password: '123'})
   ])
 
-  console.log(`seeded ${users.length} users`)
+  const products = await Promise.all([
+    Product.create({
+      name: 'On Magic - Purple',
+      price: 51.99,
+      description:
+        'New generation tamagotchi. Raise your My Tama, feed and care for it, send it on playdates. Color: Purple',
+      imageUrl:
+        'https://images-na.ssl-images-amazon.com/images/I/71b84TxN1BL._AC_SX679_.jpg'
+    }),
+    Product.create({
+      name: 'On Fairy - Blue',
+      price: 51.51,
+      description:
+        'New generation tamagotchi. Raise your My Tama, feed and care for it, send it on playdates. Color: Blue',
+      imageUrl:
+        'https://images-na.ssl-images-amazon.com/images/I/715%2BAhvEF6L._AC_SX679_.jpg'
+    }),
+    Product.create({
+      name: 'On Magic - Green',
+      price: 47.99,
+      description:
+        'New generation tamagotchi. Raise your My Tama, feed and care for it, send it on playdates. Color: Green',
+      imageUrl:
+        'https://images-na.ssl-images-amazon.com/images/I/61vT7Txan5L._AC_SX679_.jpg'
+    })
+  ])
+
+  console.log(
+    `seeded ${users.length} users`,
+    `seeded ${products.length} products`
+  )
   console.log(`seeded successfully`)
 }
 

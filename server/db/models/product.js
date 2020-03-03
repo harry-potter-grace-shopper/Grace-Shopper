@@ -8,19 +8,18 @@ const Product = db.define('product', {
     validate: {
       notEmpty: true
     },
-    unique: true,
+    unique: true
   },
   price: {
-    type: Sequelize.DECMINAL(100,2),
+    type: Sequelize.DECIMAL(100, 2)
   },
   description: {
     type: Sequelize.TEXT,
-    allowNull: true,
+    allowNull: true
   },
   imageUrl: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   }
 })
-
 
 module.exports = Product
