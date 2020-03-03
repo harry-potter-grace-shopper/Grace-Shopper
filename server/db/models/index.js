@@ -17,8 +17,8 @@ Order.belongsTo(User)
 User.hasMany(Order)
 
 // can use GetProducts method  on Order to find order history of a specific order
-Order.hasMany(Product)
-
+Order.belongsToMany(Product, {through: 'order_history'})
+Product.belongsToMany(Order, {through: 'order_history'})
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
