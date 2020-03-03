@@ -1,4 +1,5 @@
 const User = require('./user')
+const Order = require('./order')
 const Product = require('./product')
 
 /**
@@ -17,5 +18,6 @@ User.belongsToMany(Product,{ through: 'cart'})
  */
 module.exports = {
   User,
+  Order,
   Product
 }
