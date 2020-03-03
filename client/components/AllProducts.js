@@ -1,7 +1,7 @@
 import React from 'react'
 import {SingleProductCard} from './SingleProductCard'
 import {connect} from 'react-redux'
-import {getProductsThunk} from '../store/product'
+import {getProductsThunk} from '../store/products'
 
 class AllProducts extends React.Component {
   componentDidMount() {
