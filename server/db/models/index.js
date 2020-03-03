@@ -1,5 +1,6 @@
 const User = require('./user')
 const Order = require('./order')
+const Product = require('./product')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -7,6 +8,16 @@ const Order = require('./order')
  *
  *    BlogPost.belongsTo(User)
  */
+//belongs to many association to create cart
+User.belongsToMany(Product, {through: 'cart'})
+Product.belongsToMany(User, {through: 'cart'})
+
+//puts the user id on the order, can use getOrders methods on User to find previous orders
+Order.belongsTo(User)
+User.hasMany(Order)
+
+// can use GetProducts method  on Order to find order history of a specific order
+Order.hasMany(Product)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -16,5 +27,6 @@ const Order = require('./order')
  */
 module.exports = {
   User,
-  Order
+  Order,
+  Product
 }
