@@ -1,4 +1,4 @@
-export const adminsOnly = (req, res, next) => {
+const adminsOnly = (req, res, next) => {
   if (!req.user.admin) {
     const err = new Error("Wait, that's illegal")
     err.status = 401
@@ -7,7 +7,7 @@ export const adminsOnly = (req, res, next) => {
   next()
 }
 
-export const currentUserOnly = (req, res, next) => {
+const currentUserOnly = (req, res, next) => {
   if (req.user.id !== Number(req.params.userId)) {
     const err = new Error("Wait, that's illegal")
     err.status = 401
@@ -16,7 +16,7 @@ export const currentUserOnly = (req, res, next) => {
   next()
 }
 
-export const adminOrCurrentUser = (req, res, next) => {
+const adminOrCurrentUser = (req, res, next) => {
   if (req.user.id === Number(req.params.userId) || req.user.admin) {
     next()
   } else {
@@ -25,3 +25,5 @@ export const adminOrCurrentUser = (req, res, next) => {
     return next(err)
   }
 }
+
+module.exports = {adminsOnly, currentUserOnly, adminOrCurrentUser}

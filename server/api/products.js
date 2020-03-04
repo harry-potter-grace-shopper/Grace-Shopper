@@ -49,9 +49,20 @@ router.param(async (id, req, res, next) => {
 
 router.post('/', adminsOnly, async (req, res, next) => {
   try {
-    // do try to avoid using just req.body -> take out the necessary fields, that would be great.
-    const newProduct = await Product.create(req.body)
-    res.status(201).json(newProduct)
+    const newProductDetails = {
+      name: req.body.name,
+      description: req.body.description,
+      price: req.body.price,
+      imageUrl: req.body.imageUrl
+    }
+    const newProduct = await Product.create(newProductDetails)
+    if (newProduct) {
+      res.status(201).json(newProduct)
+    } else {
+      const error = new Error('Could not create new product')
+      error.status(404)
+      next(error)
+    }
   } catch (error) {
     next(error)
   }
@@ -59,9 +70,21 @@ router.post('/', adminsOnly, async (req, res, next) => {
 
 router.put('/:id', adminsOnly, async (req, res, next) => {
   try {
-    // be very careful because this will change every single product to your req.body -> returns an array of 2 values, number of rows changed, and the array of instances
-    const updatedProduct = await Product.update(req.body)
-    res.json(updatedProduct)
+    const updatedProduct = await Product.update(req.body, {
+      // update returns num of rows changed and array of updated instances
+      where: {
+        id: req.params.id
+      },
+      returning: true, // tells Sequelize to return only the array of updated instances
+      plain: true // tells Sequelize to return only the plain objects, not any metadata
+    })
+    if (updatedProduct) {
+      res.json(updatedProduct)
+    } else {
+      const error = new Error('Could not update product')
+      error.status = 404
+      next(error)
+    }
   } catch (error) {
     next(error)
   }
@@ -70,7 +93,7 @@ router.put('/:id', adminsOnly, async (req, res, next) => {
 router.delete('/:id', adminsOnly, async (req, res, next) => {
   try {
     await Product.delete({where: {id: req.param.id}})
-    res.status(204).json('Deleted product!') // does not send back a body so you will enver see deleted product
+    res.sendStatus(204)
   } catch (error) {
     next(error)
   }
