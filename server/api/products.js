@@ -71,9 +71,9 @@ router.post('/', adminsOnly, async (req, res, next) => {
 router.put('/:id', adminsOnly, async (req, res, next) => {
   try {
     const updatedProduct = await Product.update(req.body, {
-      // update returns num of rows changed and array of updated instances
+      // Product.update returns num of rows changed and array of updated instances, handled this with returning:true and plain: true below
       where: {
-        id: req.params.id
+        id: req.params.id //added which product to update
       },
       returning: true, // tells Sequelize to return only the array of updated instances
       plain: true // tells Sequelize to return only the plain objects, not any metadata
@@ -93,7 +93,7 @@ router.put('/:id', adminsOnly, async (req, res, next) => {
 router.delete('/:id', adminsOnly, async (req, res, next) => {
   try {
     await Product.delete({where: {id: req.param.id}})
-    res.sendStatus(204)
+    res.sendStatus(204) //removed .json(product)
   } catch (error) {
     next(error)
   }
