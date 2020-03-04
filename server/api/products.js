@@ -47,6 +47,20 @@ router.param(async (id, req, res, next) => {
 })
 */
 
+// router.param
+/*
+router.param(async (id, req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.id)
+    if (product) {
+      req.product = product;
+      next();
+    } catch (e) {
+      next(e);
+    }
+})
+*/
+
 router.post('/', adminsOnly, async (req, res, next) => {
   try {
     // do try to avoid using just req.body -> take out the necessary fields, that would be great.

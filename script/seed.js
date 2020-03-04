@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Product, Order, Cart} = require('../server/db/models')
+const {User, Product, Order, OrderHistory} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -17,7 +17,7 @@ async function seed() {
 
   const prod1 = await Product.create({
     name: 'On Magic - Purple',
-    price: 51.99,
+    price: 51,
     description:
       'New generation tamagotchi. Raise your My Tama, feed and care for it, send it on playdates. Color: Purple',
     imageUrl:
@@ -25,15 +25,13 @@ async function seed() {
   })
   const prod2 = await Product.create({
     name: 'On Fairy - Blue',
-    price: 51.51,
+    price: 51,
     description:
-      'New generation tamagotchi. Raise your My Tama, feed and care for it, send it on playdates. Color: Blue',
-    imageUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/715%2BAhvEF6L._AC_SX679_.jpg'
+      'New generation tamagotchi. Raise your My Tama, feed and care for it, send it on playdates. Color: Blue'
   })
   const prod3 = await Product.create({
     name: 'On Magic - Green',
-    price: 47.99,
+    price: 47,
     description:
       'New generation tamagotchi. Raise your My Tama, feed and care for it, send it on playdates. Color: Green',
     imageUrl:
@@ -41,56 +39,28 @@ async function seed() {
   })
 
   const order1 = await Order.create({
-    productsId: [1, 2, 3],
-    totalCost: 151.49,
-    paymentMethod: 'creditCard',
-    shippingInfo: '23 Maple Drive, Brooklyn, NY, 11135'
+    shippingInfo: '23 Maple Drive, Brooklyn, NY, 11135',
+    completed: true
   })
   const order2 = await Order.create({
-    productsId: [1, 1, 1],
-    totalCost: 155.97,
-    paymentMethod: 'stripe',
-    shippingInfo: '12 Oak Lane, Vancouver, WA, 92913'
+    shippingInfo: '12 Oak Lane, Vancouver, WA, 92913',
+    completed: false
   })
   const order3 = await Order.create({
-    productsId: [3],
-    totalCost: 47.99,
-    paymentMethod: 'paypal',
-    shippingInfo: 'The Knaves, Duke Street, Stanton, MA, 39135'
+    shippingInfo: 'The Knaves, Duke Street, Stanton, MA, 39135',
+    completed: false
   })
 
-  //Establishing a user's order history
-  //2 of the orders belong to one of the users
-  // 1 of the orders belongs to the other user
-  await user1.addOrders([order1, order2]) // userIDs are on the order Instances.
+  await order1.addProducts([prod1, prod2])
+  await order2.addProduct(prod1)
+  await order3.addProducts(prod3)
+
+  await user1.addOrders([order1, order2])
   await user2.addOrder(order3)
-
-  //Establishing cart through table
-  //2 products belong to a user
-  // one product belongs to a user several times
-  await user2.addProducts([prod1, prod2])
-
-  // if you have some commented out code that you do want to work on later, i would suggest putting that in a separate branch that's called "initials/seed_data_updates"
-
-  //await user1.addProducts([prod3, prod3, prod3]); // cannot add multiple instances on a many to many table. Therefore cannot add 2+ products of the same item for one user
-
-  //Associating products onto an order
-  // Put one product onto an order
-  //await order2.addProducts([prod2, prod1]);
-  // await order1.addProducts([prod2, prod1]); //puts orderID onto product object. Only adds 1 order per product.  Should this be the other way around?
-
-  // console.log(
-  //   `seeded ${users.length} users`,
-  //   `seeded ${products.length} products`
-  //   `seeded orders`
-  // )
 
   console.log(`seeded successfully`)
 }
 
-// We've separated the `seed` function from the `runSeed` function.
-// This way we can isolate the error handling and exit trapping.
-// The `seed` function is concerned only with modifying the database.
 async function runSeed() {
   console.log('seeding...')
   try {
@@ -105,12 +75,8 @@ async function runSeed() {
   }
 }
 
-// Execute the `seed` function, IF we ran this module directly (`node seed`).
-// `Async` functions always return a promise, so we can use `catch` to handle
-// any errors that might occur inside of `seed`.
 if (module === require.main) {
   runSeed()
 }
 
-// we export the seed function for testing purposes (see `./seed.spec.js`)
 module.exports = seed
