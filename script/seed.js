@@ -39,13 +39,16 @@ async function seed() {
   })
 
   const order1 = await Order.create({
-    shippingInfo: '23 Maple Drive, Brooklyn, NY, 11135'
+    shippingInfo: '23 Maple Drive, Brooklyn, NY, 11135',
+    completed: true
   })
   const order2 = await Order.create({
-    shippingInfo: '12 Oak Lane, Vancouver, WA, 92913'
+    shippingInfo: '12 Oak Lane, Vancouver, WA, 92913',
+    completed: false
   })
   const order3 = await Order.create({
-    shippingInfo: 'The Knaves, Duke Street, Stanton, MA, 39135'
+    shippingInfo: 'The Knaves, Duke Street, Stanton, MA, 39135',
+    completed: false
   })
 
   await order1.addProducts([prod1, prod2])

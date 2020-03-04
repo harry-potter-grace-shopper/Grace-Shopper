@@ -7,7 +7,7 @@ const Order = db.define('order', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  isComplete: {
+  completed: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
