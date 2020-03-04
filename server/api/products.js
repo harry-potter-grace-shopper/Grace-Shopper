@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const {Product} = require('../db/models')
 
-import {adminsOnly} from '../utils'
+const {adminsOnly} = require('../utils')
 
 module.exports = router
 
