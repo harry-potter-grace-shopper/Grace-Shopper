@@ -2,34 +2,7 @@ const router = require('express').Router()
 const {User, Product, Cart, Order} = require('../db/models')
 module.exports = router
 
-// goes into its own little file!
-const adminsOnly = (req, res, next) => {
-  if (!req.user.admin) {
-    const err = new Error("Wait, that's illegal")
-    err.status = 401
-    return next(err)
-  }
-  next()
-}
-
-const currentUserOnly = (req, res, next) => {
-  if (req.user.id !== Number(req.params.userId)) {
-    const err = new Error("Wait, that's illegal")
-    err.status = 401
-    return next(err)
-  }
-  next()
-}
-
-const adminOrCurrentUser = (req, res, next) => {
-  if (req.user.id === Number(req.params.userId) || req.user.admin) {
-    next()
-  } else {
-    const err = new Error('Not your Page!')
-    err.status = 401
-    return next(err)
-  }
-}
+import {adminsOnly, currentUserOnly, adminOrCurrentUser} from '../utils'
 
 //get all users for admin only
 router.get('/', adminsOnly, async (req, res, next) => {
