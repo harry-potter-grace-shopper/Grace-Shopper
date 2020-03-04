@@ -2,6 +2,7 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Product = db.define('product', {
+  // need an inventory as a field
   name: {
     type: Sequelize.STRING,
     allowNull: false,
