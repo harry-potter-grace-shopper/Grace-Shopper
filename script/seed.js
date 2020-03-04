@@ -9,6 +9,11 @@ async function seed() {
 
   const user1 = await User.create({email: 'cody@email.com', password: '123'})
   const user2 = await User.create({email: 'murphy@email.com', password: '123'})
+  const user3 = await User.create({
+    email: 'admin@email.com',
+    password: '123',
+    admin: true
+  })
 
   const prod1 = await Product.create({
     name: 'On Magic - Purple',
