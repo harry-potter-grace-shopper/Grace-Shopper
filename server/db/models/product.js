@@ -11,14 +11,25 @@ const Product = db.define('product', {
     unique: true
   },
   price: {
-    type: Sequelize.DECIMAL(100, 2)
+    type: Sequelize.INTEGER,
+    validate: {
+      min: 1
+    }
   },
   description: {
     type: Sequelize.TEXT,
     allowNull: true
   },
   imageUrl: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue:
+      'https://www.logolynx.com/images/logolynx/d4/d429675b3b80e9cae4ab2f1dc734926a.gif',
+    validate: {
+      isUrl: true
+    }
+  },
+  inventory: {
+    type: Sequelize.INTEGER
   }
 })
 

@@ -1,21 +1,27 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const Product = require('./product')
 
 const Order = db.define('order', {
-  productsId: {
-    type: Sequelize.ARRAY(Sequelize.INTEGER)
-  },
-  totalCost: {
-    type: Sequelize.DECIMAL
-  },
-  paymentMethod: {
-    type: Sequelize.ENUM('paypal', 'stripe', 'creditCard'),
-    allowNull: false
-  },
   shippingInfo: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+  completed: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 })
+
+Order.getTotal = async function(orderId) {
+  const productCostArr = await Order.findAll({
+    where: {
+      id: orderId
+    },
+    include: Product,
+    attributes: ['Price']
+  })
+  return productCostArr.reduce((a, b) => a + b, 0)
+}
 
 module.exports = Order

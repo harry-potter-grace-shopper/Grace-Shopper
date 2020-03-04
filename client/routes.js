@@ -6,6 +6,7 @@ import {Login, Signup, UserHome} from './components'
 import SingleProduct from './components/SingleProduct'
 import AllProducts from './components/AllProducts'
 import {me} from './store'
+import AllUsers from './components/AllUsers'
 
 /**
  * COMPONENT
@@ -27,6 +28,8 @@ class Routes extends Component {
         <Route path="/products/:id" component={SingleProduct} />
         <Route exact path="/" component={AllProducts} />
         <Route exact path="/home" component={AllProducts} />
+        {/* these routes v that does not need to be seen by all users should also be protected in the frontend to check if you are loggied in or not */}
+        <Route exact path="/users" component={AllUsers} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -55,6 +58,8 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+      // retrieve all of your products here and make your all products component stateless
+      // also can allow your single product to be stateless as well
     }
   }
 }
