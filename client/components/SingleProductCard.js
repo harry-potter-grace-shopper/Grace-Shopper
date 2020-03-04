@@ -1,6 +1,5 @@
 import React from 'react'
-import {Link, Route} from 'react-router-dom'
-import SingleProduct from './SingleProduct'
+import {Link} from 'react-router-dom'
 
 export const SingleProductCard = props => {
   const {name, price, imageUrl, id} = props
