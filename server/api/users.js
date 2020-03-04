@@ -2,34 +2,7 @@ const router = require('express').Router()
 const {User, Product, Cart, Order} = require('../db/models')
 module.exports = router
 
-// goes into its own little file!
-const adminsOnly = (req, res, next) => {
-  if (!req.user.admin) {
-    const err = new Error("Wait, that's illegal")
-    err.status = 401
-    return next(err)
-  }
-  next()
-}
-
-const currentUserOnly = (req, res, next) => {
-  if (req.user.id !== Number(req.params.userId)) {
-    const err = new Error("Wait, that's illegal")
-    err.status = 401
-    return next(err)
-  }
-  next()
-}
-
-const adminOrCurrentUser = (req, res, next) => {
-  if (req.user.id === Number(req.params.userId) || req.user.admin) {
-    next()
-  } else {
-    const err = new Error('Not your Page!')
-    err.status = 401
-    return next(err)
-  }
-}
+const {adminsOnly, currentUserOnly, adminOrCurrentUser} = require('../utils')
 
 //get all users for admin only
 router.get('/', adminsOnly, async (req, res, next) => {
@@ -49,8 +22,9 @@ router.get('/', adminsOnly, async (req, res, next) => {
 //get single page user for admins and the logged in user
 router.get('/:userId', adminOrCurrentUser, async (req, res, next) => {
   try {
-    //  attributes: ['id', 'email']
-    const user = await User.findByPk(req.params.userId)
+    const user = await User.findByPk(req.params.userId, {
+      attributes: ['id', 'email']
+    })
     if (user) {
       res.status(200).json(user)
     } else {
@@ -61,61 +35,43 @@ router.get('/:userId', adminOrCurrentUser, async (req, res, next) => {
   }
 })
 
-// create  and undo user/product association in  cart +
-// add/1/1 -> i am trying to access add id 1 and id 1
-// make this a put route to update quantity or add product
-// also possibly have a delete route to remove a product from your cart
-// would suggest putting your action and your prodId in a req.body (in an object)
-/* router.put('/api/users/:userId/cart', (req, res, next) => {
-  const { action, prodId } = req.body
-  .....
-})
-*/
-router.get(
-  '/:action/:userId/:prodId',
-  currentUserOnly,
-  async (req, res, next) => {
-    try {
-      const user = await User.findByPk(req.params.userId)
-      const product = await Product.findByPk(req.params.prodId)
-      if (req.params.action === 'add') {
-        user.addProduct(product)
-        res.send(product)
-      } else {
-        user.removeProduct(product)
-        res.sendStatus(204)
-      }
-      //this sends back the newly added product to then add to the state
-    } catch (err) {
-      next(err)
-    }
-  }
-)
-
-router.get('/checkout/:userId', currentUserOnly, async (req, res, next) => {
+////adding product to the cart
+router.put('/:userId/cart', currentUserOnly, async (req, res, next) => {
   try {
-    const cartItems = await Cart.findAll({
-      where: {
-        userId: req.params.userId
-      },
-      attributes: ['productId']
+    const currentProduct = await Product.findByPk(req.body.productId)
+    const currentOrder = await Order.findOne({
+      where: {userId: req.params.userId, completed: false}
     })
-
-    // WE WILL NEED TO UPDATE THIS TO INCLUDE THE ADDITIONAL FORM DATA FOR ORDER PROPERTIES
-    //RIGHT NOW IT IS ONLY SENDING PRODUCTIDs
-    console.log(cartItems)
-    const orderItems = cartItems.map(obj => {
-      return obj.productId
-    })
-    const newOrder = await Order.create({
-      productsId: orderItems,
-      paymentMethod: 'paypal',
-      shippingInfo: 'home'
-    })
-    res.json(newOrder)
-  } catch (err) {
-    next(err)
+    await currentOrder.addProduct(currentProduct)
+    res.json(currentProduct)
+  } catch (error) {
+    next(error)
   }
 })
 
-//
+////removing product from the cart
+router.delete('/:userId/cart', currentUserOnly, async (req, res, next) => {
+  try {
+    const removedProduct = await Product.findByPk(req.body.productId)
+    const currentOrder = await Order.findOne({
+      where: {userId: req.params.userId, completed: false}
+    })
+    await currentOrder.removeProduct(removedProduct)
+    res.sendStatus(204)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/checkout/:userId', currentUserOnly, async (req, res, next) => {
+  try {
+    const currentOrder = await Order.findOne({
+      where: {userId: req.params.userId, completed: false}
+    })
+    await currentOrder.update({completed: true})
+    await Order.create({userId: req.params.userId})
+    res.json(currentOrder)
+  } catch (error) {
+    next(error)
+  }
+})

@@ -1,6 +1,8 @@
 const router = require('express').Router()
 const {Product} = require('../db/models')
 
+const {adminsOnly} = require('../utils')
+
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -31,16 +33,19 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-// you will likely need this in other files and having stored it inside of products.js doesn't make as much sense because it doesn't relate to a product
-// putting that in gatekeeping middleware file instead or another utils file and exporting from there, and importing into the necessary files
-const adminsOnly = (req, res, next) => {
-  if (!req.user.admin) {
-    const err = new Error("Wait, that's illegal")
-    err.status = 401
-    return next(err)
-  }
-  next()
-}
+// router.param
+/*
+router.param(async (id, req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.id)
+    if (product) {
+      req.product = product;
+      next();
+    } catch (e) {
+      next(e);
+    }
+})
+*/
 
 // router.param
 /*
