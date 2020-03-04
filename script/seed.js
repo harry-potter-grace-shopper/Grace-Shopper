@@ -9,6 +9,11 @@ async function seed() {
 
   const user1 = await User.create({email: 'cody@email.com', password: '123'})
   const user2 = await User.create({email: 'murphy@email.com', password: '123'})
+  const user3 = await User.create({
+    email: 'admin@email.com',
+    password: '123',
+    admin: true
+  })
 
   const prod1 = await Product.create({
     name: 'On Magic - Purple',
@@ -64,6 +69,8 @@ async function seed() {
   //2 products belong to a user
   // one product belongs to a user several times
   await user2.addProducts([prod1, prod2])
+
+  // if you have some commented out code that you do want to work on later, i would suggest putting that in a separate branch that's called "initials/seed_data_updates"
 
   //await user1.addProducts([prod3, prod3, prod3]); // cannot add multiple instances on a many to many table. Therefore cannot add 2+ products of the same item for one user
 

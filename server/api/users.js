@@ -2,33 +2,7 @@ const router = require('express').Router()
 const {User, Product, Cart, Order} = require('../db/models')
 module.exports = router
 
-const adminsOnly = (req, res, next) => {
-  if (!req.user.admin) {
-    const err = new Error("Wait, that's illegal")
-    err.status = 401
-    return next(err)
-  }
-  next()
-}
-
-const currentUserOnly = (req, res, next) => {
-  if (req.user.id !== Number(req.params.userId)) {
-    const err = new Error("Wait, that's illegal")
-    err.status = 401
-    return next(err)
-  }
-  next()
-}
-
-const adminOrCurrentUser = (req, res, next) => {
-  if (req.user.id === Number(req.params.userId) || req.user.admin) {
-    next()
-  } else {
-    const err = new Error('Not your Page!')
-    err.status = 401
-    return next(err)
-  }
-}
+const {adminsOnly, currentUserOnly, adminOrCurrentUser} = require('../utils')
 
 //get all users for admin only
 router.get('/', adminsOnly, async (req, res, next) => {
@@ -48,6 +22,7 @@ router.get('/', adminsOnly, async (req, res, next) => {
 //get single page user for admins and the logged in user
 router.get('/:userId', adminOrCurrentUser, async (req, res, next) => {
   try {
+    //  attributes: ['id', 'email']
     const user = await User.findByPk(req.params.userId)
     if (user) {
       res.status(200).json(user)
@@ -60,7 +35,15 @@ router.get('/:userId', adminOrCurrentUser, async (req, res, next) => {
 })
 
 // create  and undo user/product association in  cart +
-
+// add/1/1 -> i am trying to access add id 1 and id 1
+// make this a put route to update quantity or add product
+// also possibly have a delete route to remove a product from your cart
+// would suggest putting your action and your prodId in a req.body (in an object)
+/* router.put('/api/users/:userId/cart', (req, res, next) => {
+  const { action, prodId } = req.body
+  .....
+})
+*/
 router.get(
   '/:action/:userId/:prodId',
   currentUserOnly,
