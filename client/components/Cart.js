@@ -9,26 +9,14 @@ class Cart extends React.Component {
   }
 
   render() {
-    // console.log(this.props.user)
-    // const products = [
-    //   {
-    //     id: 1,
-    //     name: 'Blue Tamagotchi',
-    //     quantity: 1,
-    //     price: 5,
-    //     imageUrl:
-    //       'https://images-na.ssl-images-amazon.com/images/I/61vT7Txan5L._AC_SX679_.jpg'
-    //   },
-    //   {
-    //     id: 2,
-    //     name: 'Green Tamagotchi',
-    //     quantity: 1,
-    //     price: 50,
-    //     imageUrl:
-    //       'https://images-na.ssl-images-amazon.com/images/I/61vT7Txan5L._AC_SX679_.jpg'
-    //   }
-    // ]
     const products = this.props.products
+    if (products.length === 0)
+      return (
+        <div className="cart-page">
+          <h1>My Cart</h1>
+          <p> Your Cart is empty</p>
+        </div>
+      )
     return (
       <div className="cart-page">
         <h1>My Cart</h1>
