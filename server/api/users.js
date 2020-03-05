@@ -80,23 +80,40 @@ router.delete('/:userId/cart', currentUserOnly, async (req, res, next) => {
   }
 })
 
-//put route to update order quantity (add or recrease) IN PROGRESS
-// router.put('/:userId/cart/:productId/:action', currentUserOnly, async (req, res, next) => {
-//   try {
-//     const {userId, productId, action} = req.params
-//     const order = await OrderHistory.findOne({where: {
-//       productId: productId.id, userId: userId.id
-//     }})
-//     if(action === remove) {
-//       order.update({quantity: order.quantity--})
-//     } else {
-//       if()
-//       order.update({quantity: order.quantity--})
-//     }
-//   } catch (e) {
-//     next(e)
-//   }
-// })
+// put route to update order quantity (add or recrease)
+router.put(
+  '/:userId/cart/:productId/:action',
+  currentUserOnly,
+  async (req, res, next) => {
+    try {
+      const {userId, productId, action} = req.params
+      const product = await Product.findByPk(productId)
+      const order = await OrderHistory.findOne({
+        where: {
+          productId: productId.id,
+          userId: userId.id
+        }
+      })
+      if (action === 'remove') {
+        if (order.quantity === 1) {
+          await order.removeProduct(product)
+        } else {
+          await order.update({quantity: order.quantity--})
+        }
+      } else if (action === 'add') {
+        await order.update({quantity: order.quantity++})
+      }
+      //sending back the updated Cart Items instead of just the updated item
+      const userCart = await Order.findOne({
+        where: {userId: userId, completed: false},
+        include: {model: OrderHistory, include: {model: Product}}
+      })
+      res.json(userCart)
+    } catch (e) {
+      next(e)
+    }
+  }
+)
 
 router.put('/checkout/:userId', currentUserOnly, async (req, res, next) => {
   try {
