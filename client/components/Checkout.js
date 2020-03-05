@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {me} from '../store'
+import {getCartThunk} from '../store/cart'
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -25,6 +26,9 @@ class Checkout extends React.Component {
         email: this.props.user.email,
         address: this.props.user.address
       })
+
+      const userId = this.props.user.id
+      this.props.getCart(userId)
     }
   }
 
@@ -44,6 +48,7 @@ class Checkout extends React.Component {
   }
 
   render() {
+    const products = this.props.products
     return (
       <div className="checkout-page">
         <h1>Checkout</h1>
@@ -51,6 +56,25 @@ class Checkout extends React.Component {
         <div className="checkout-container">
           <div className="checkout-section">
             <h2>Order Summary</h2>
+            <div>
+              {products.map(product => (
+                <div className="cart-item" key={product.id}>
+                  <div className="cart-image">
+                    <img src={product.imageUrl} />
+                  </div>
+
+                  <div className="cart-details">
+                    <h3>{product.name}</h3>
+                    <p>Quantity: {product.quantity}</p>
+                    <p>Price: ${product.price}.00</p>
+                    <h3>Total: $X.00</h3>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div>
+              <h2>Order Total: $X.00</h2>
+            </div>
           </div>
 
           <div className="checkout-section">
@@ -104,12 +128,15 @@ class Checkout extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  products: state.cart.products
 })
 
 const mapDispatchToProps = dispatch => ({
-  getUserInfo: () => dispatch(me())
-  // submitOrder: (userId) => dispatch(submitOrderThunk(userId))
+  getUserInfo: () => dispatch(me()),
+  getCart: userId => {
+    dispatch(getCartThunk(userId))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)
