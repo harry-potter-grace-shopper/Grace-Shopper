@@ -21,10 +21,7 @@ class Checkout extends React.Component {
 
     if (this.props.user.id) {
       this.setState({
-        firstName: this.props.user.firstName,
-        lastName: this.props.user.lastName,
-        email: this.props.user.email,
-        address: this.props.user.address
+        email: this.props.user.email
       })
 
       const userId = this.props.user.id
