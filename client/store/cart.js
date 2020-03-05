@@ -11,10 +11,10 @@ const getCart = cart => ({
 export const getCartThunk = userId => {
   return async dispatch => {
     try {
-      const {data} = await axios.get(`/api/users/checkout/${userId}`)
+      const {data} = await axios.get(`/api/users/${userId}/cart`)
       dispatch(getCart(data))
     } catch (error) {
-      console.log('Failed to GET /checkout/:usersId aka the cart', error)
+      console.log('Failed to GET /users/:usersId/cart aka the cart', error)
     }
   }
 }
@@ -37,11 +37,6 @@ export const addProductThunk = (productId, userId) => {
   }
 }
 
-// const initialState = {
-//   cart: [],
-//   productQuantities: {}
-// }
-
 const initialState = {
   products: []
 }
@@ -49,7 +44,7 @@ const initialState = {
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_CART:
-      return {...state, cart: action.cart}
+      return {...state, products: [...action.cart]}
     case ADD_PRODUCT:
       return {...state, products: [...state.products, action.product]}
     default:
