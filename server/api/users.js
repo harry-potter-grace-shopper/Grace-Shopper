@@ -111,17 +111,33 @@ router.put('/checkout/:userId', currentUserOnly, async (req, res, next) => {
   }
 })
 
-//NEED TO REVIEW THIS ROUTE
-//get all items in logged in user's cart
-//we want to get product id, name, imageUrl, quantity, currentPrice
+//Route to get the user's cart
 router.get('/:userId/cart', currentUserOnly, async (req, res, next) => {
   try {
-    const userCart = await Order.findOne({
-      where: {userId: req.params.userId, completed: false},
-      include: {model: OrderHistory, include: {model: Product}}
+    const cartItems = await Product.findAll({
+      include: {
+        model: Order,
+        where: {
+          userId: req.params.userId,
+          completed: false
+        }
+      }
     })
-    res.json(userCart)
+    if (cartItems.length === 0) {
+      res.send('Your cart is empty')
+    } else {
+      res.json(cartItems) //This returns an array of productObjects
+    }
   } catch (error) {
     next(error)
   }
 })
+
+/*
+navigating the cartItems array :
+product id = cartItem.id,
+name = cartItem.name,
+imageUrl = cartItem.imageUrl,
+quantity = cartItem.orders[0].order_history.quantity,
+currentPrice = cartItem.orders[0].order_history.currentPrice
+*/
