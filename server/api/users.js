@@ -42,15 +42,15 @@ router.put('/:userId/cart', currentUserOnly, async (req, res, next) => {
     const currentOrder = await Order.findOne({
       where: {userId: req.params.userId, completed: false}
     })
-    if (
-      await OrderHistory.findOne({
-        where: {
-          productId: currentProduct.id,
-          orderId: currentOrder.id
-        }
-      })
-    ) {
-      res.sendStatus('already in your cart')
+    const orderItem = await OrderHistory.findOne({
+      where: {
+        productId: currentProduct.id,
+        orderId: currentOrder.id
+      }
+    })
+    if (orderItem) {
+      orderItem.increment('quantity')
+      res.json(orderItem)
     }
     await currentOrder.addProduct(currentProduct)
     const cartItem = await OrderHistory.findOne({
@@ -79,41 +79,6 @@ router.delete('/:userId/cart', currentUserOnly, async (req, res, next) => {
     next(error)
   }
 })
-
-// put route to update order quantity (add or recrease)
-router.put(
-  '/:userId/cart/:productId/:action',
-  currentUserOnly,
-  async (req, res, next) => {
-    try {
-      const {userId, productId, action} = req.params
-      const product = await Product.findByPk(productId)
-      const order = await OrderHistory.findOne({
-        where: {
-          productId: productId.id,
-          userId: userId.id
-        }
-      })
-      if (action === 'remove') {
-        if (order.quantity === 1) {
-          await order.removeProduct(product)
-        } else {
-          await order.update({quantity: order.quantity--})
-        }
-      } else if (action === 'add') {
-        await order.update({quantity: order.quantity++})
-      }
-      //sending back the updated Cart Items instead of just the updated item
-      const userCart = await Order.findOne({
-        where: {userId: userId, completed: false},
-        include: {model: OrderHistory, include: {model: Product}}
-      })
-      res.json(userCart)
-    } catch (e) {
-      next(e)
-    }
-  }
-)
 
 router.put('/checkout/:userId', currentUserOnly, async (req, res, next) => {
   try {
