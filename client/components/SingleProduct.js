@@ -15,12 +15,15 @@ class SingleProduct extends React.Component {
   render() {
     const {product} = this.props
     return (
-      <div>
-        <h2>{product.name}</h2>
-        <p>{product.description}</p>
-        <h3>{product.price}</h3>
+      <div className="single-product-page">
         <img src={product.imageUrl} />
-        {/* <button onClick={this.handleSubmit}>Add To Cart</button> */}
+        <div className="single-product-details">
+          <h2>{product.name}</h2>
+          <p>{product.description}</p>
+          <h3>${product.price}.00</h3>
+
+          {/* <button onClick={this.handleSubmit}>Add To Cart</button> */}
+        </div>
       </div>
     )
   }

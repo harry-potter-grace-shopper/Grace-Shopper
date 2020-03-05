@@ -41,12 +41,15 @@ class Cart extends React.Component {
               <div className="cart-details">
                 <h3>{item.name}</h3>
                 <p>Quantity: {item.quantity}</p>
-                <p>Price: ${item.price}</p>
+                <button type="button">Increase Qty</button>
+                <button type="button">Decrease Qty</button>
+                <button type="button">Remove Item</button>
+                <p>Price: ${item.price}.00</p>
               </div>
             </div>
           ))}
         </div>
-        <h2>Total: $5</h2>
+        <h2>Total: $X.00</h2>
         <button type="submit">Checkout</button>
       </div>
     )

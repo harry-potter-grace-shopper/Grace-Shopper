@@ -5,10 +5,10 @@ export const SingleProductCard = props => {
   const {name, price, imageUrl, id} = props
   return (
     <Link to={`/products/${id}`}>
-      <div>
+      <div className="single-product-card">
         <h2>{name}</h2>
         <img src={imageUrl} width="200" />
-        <h3>{price}</h3>
+        <h3>${price}.00</h3>
       </div>
     </Link>
   )
