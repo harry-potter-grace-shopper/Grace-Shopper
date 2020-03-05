@@ -1,16 +1,64 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import CartItem from './CartItem'
+import {getCartThunk} from '../store/cart'
 
 class Cart extends React.Component {
+  // componentDidMount() {
+  //   const {data: {id} } = await axios.get(`/api/`)
+  //   this.props.getCart(data.id)
+  // }
+
   render() {
+    const items = [
+      {
+        id: 1,
+        name: 'Blue Tamagotchi',
+        quantity: 1,
+        price: 5,
+        imageUrl:
+          'https://images-na.ssl-images-amazon.com/images/I/61vT7Txan5L._AC_SX679_.jpg'
+      },
+      {
+        id: 2,
+        name: 'Green Tamagotchi',
+        quantity: 1,
+        price: 50,
+        imageUrl:
+          'https://images-na.ssl-images-amazon.com/images/I/61vT7Txan5L._AC_SX679_.jpg'
+      }
+    ]
+
     return (
-      <div>
-        <h1>Your Cart</h1>
-        <CartItem />
+      <div className="cart-page">
+        <h1>My Cart</h1>
+        <div className="cart-container">
+          {items.map(item => (
+            <div className="cart-item" key={item.id}>
+              <div className="cart-image">
+                <img src={item.imageUrl} />
+              </div>
+
+              <div className="cart-details">
+                <h3>{item.name}</h3>
+                <p>Quantity: {item.quantity}</p>
+                <p>Price: ${item.price}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <h2>Total: $5</h2>
+        <button type="submit">Checkout</button>
       </div>
     )
   }
 }
 
-export default Cart
+const mapStateToProps = state => ({
+  cart: state.cart
+})
+
+const mapDispatchToProps = dispatch => ({
+  getCart: userId => dispatch(getCartThunk(userId))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)
