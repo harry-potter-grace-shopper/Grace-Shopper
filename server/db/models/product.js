@@ -24,10 +24,10 @@ const Product = db.define('product', {
   imageUrl: {
     type: Sequelize.STRING,
     defaultValue:
-      'https://www.logolynx.com/images/logolynx/d4/d429675b3b80e9cae4ab2f1dc734926a.gif',
-    validate: {
-      isUrl: true
-    }
+      'https://www.logolynx.com/images/logolynx/d4/d429675b3b80e9cae4ab2f1dc734926a.gif'
+    // validate: {
+    //   isUrl: true
+    // }
   },
   inventory: {
     type: Sequelize.INTEGER
