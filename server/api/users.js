@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Product, Cart, Order} = require('../db/models')
+const {User, Product, Order} = require('../db/models')
 module.exports = router
 
 const {adminsOnly, currentUserOnly, adminOrCurrentUser} = require('../utils')
@@ -38,7 +38,7 @@ router.get('/:userId', adminOrCurrentUser, async (req, res, next) => {
 ////adding product to the cart
 router.put('/:userId/cart', currentUserOnly, async (req, res, next) => {
   try {
-    const currentProduct = await Product.findByPk(req.body.productId)
+    const currentProduct = await Product.findByPk(req.body.id)
     const currentOrder = await Order.findOne({
       where: {userId: req.params.userId, completed: false}
     })
@@ -52,7 +52,7 @@ router.put('/:userId/cart', currentUserOnly, async (req, res, next) => {
 ////removing product from the cart
 router.delete('/:userId/cart', currentUserOnly, async (req, res, next) => {
   try {
-    const removedProduct = await Product.findByPk(req.body.productId)
+    const removedProduct = await Product.findByPk(req.body.id)
     const currentOrder = await Order.findOne({
       where: {userId: req.params.userId, completed: false}
     })
@@ -69,7 +69,7 @@ router.put('/checkout/:userId', currentUserOnly, async (req, res, next) => {
       where: {userId: req.params.userId, completed: false}
     })
     await currentOrder.update({completed: true})
-    await Order.create({userId: req.params.userId})
+    await Order.create({userId: req.params.id})
     res.json(currentOrder)
   } catch (error) {
     next(error)
