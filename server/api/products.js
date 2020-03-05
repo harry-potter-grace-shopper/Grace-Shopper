@@ -63,15 +63,9 @@ router.post('/', adminsOnly, async (req, res, next) => {
 
 router.put('/:id', adminsOnly, async (req, res, next) => {
   try {
-    const updatedProduct = await Product.update(req.body, {
-      // Product.update returns num of rows changed and array of updated instances, handled this with returning:true and plain: true below
-      where: {
-        id: req.params.id //added which product to update
-      },
-      returning: true, // tells Sequelize to return only the array of updated instances
-      plain: true // tells Sequelize to return only the plain objects, not any metadata
-    })
-    if (updatedProduct) {
+    const product = await Product.findByPk(req.params.id)
+    if (product) {
+      const updatedProduct = await product.update(req.body)
       res.json(updatedProduct)
     } else {
       const error = new Error('Could not update product')
