@@ -124,7 +124,8 @@ router.get('/:userId/cart', currentUserOnly, async (req, res, next) => {
       }
     })
     if (cartItems.length === 0) {
-      res.send('Your cart is empty')
+      const error = new Error('Your cart is empty')
+      next(error)
     } else {
       res.json(cartItems) //This returns an array of productObjects
     }
