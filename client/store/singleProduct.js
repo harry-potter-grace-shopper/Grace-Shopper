@@ -27,8 +27,7 @@ const updateProduct = updatedProduct => ({
 export const updateProductThunk = (productId, updates) => {
   return async dispatch => {
     try {
-      const {data} = await axios.put(`/api/product/${productId}`, updates)
-      console.log(data)
+      const {data} = await axios.put(`/api/products/${productId}`, updates)
       dispatch(updateProduct(data))
     } catch (error) {
       console.log('Error with updating of the product!', error)
@@ -43,7 +42,7 @@ const singleProductReducer = (state = initialState, action) => {
     case SET_PRODUCT:
       return action.product
     case UPDATE_PRODUCT:
-      return action.updateProduct
+      return {...state, product: action.updateProduct}
     default:
       return state
   }

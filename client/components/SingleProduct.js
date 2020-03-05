@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {setProductThunk} from '../store/singleProduct'
 import {addProductThunk} from '../store/cart'
 import UpdateProduct from './UpdateProduct'
+import {removeProductThunk} from '../store/products'
 
 class SingleProduct extends React.Component {
   componentDidMount() {
@@ -14,7 +15,7 @@ class SingleProduct extends React.Component {
     const {product, user} = this.props
     return (
       <div>
-        {user.admin ? <UpdateProduct /> : <div />}
+        {user.admin ? <UpdateProduct product={product} /> : <div />}
         <div className="single-product-page">
           <img src={product.imageUrl} />
           <div className="single-product-details">
@@ -22,7 +23,15 @@ class SingleProduct extends React.Component {
             <p>{product.description}</p>
             <h3>${product.price}.00</h3>
             {user.admin ? (
-              <button type="submit">REMOVE PRODUCT</button>
+              <button
+                type="submit"
+                onClick={() => {
+                  this.props.remove(product.id)
+                  this.props.history.push('/products')
+                }}
+              >
+                REMOVE PRODUCT
+              </button>
             ) : (
               <button
                 type="submit"
@@ -41,7 +50,8 @@ class SingleProduct extends React.Component {
 const mapDispatchToProps = dispatch => ({
   setProduct: id => dispatch(setProductThunk(id)),
   addProduct: (productId, userId) =>
-    dispatch(addProductThunk(productId, userId))
+    dispatch(addProductThunk(productId, userId)),
+  remove: productId => dispatch(removeProductThunk(productId))
 })
 
 const mapStateToProps = state => ({

@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {updateProductThunk} from '../store/singleProduct'
+import {updateProductThunk, setProductThunk} from '../store/singleProduct'
 
 class UpdateProduct extends React.Component {
   constructor() {
@@ -15,6 +15,7 @@ class UpdateProduct extends React.Component {
   }
 
   render() {
+    const {product} = this.props
     return (
       <div>
         <h3>Form for updating product information:</h3>
@@ -53,7 +54,7 @@ class UpdateProduct extends React.Component {
             type="submit"
             onClick={evt => {
               evt.preventDefault()
-              this.props.updateProduct(this.state)
+              this.props.updateProduct(product.id, this.state)
               this.setState({
                 name: '',
                 price: '',
@@ -61,6 +62,7 @@ class UpdateProduct extends React.Component {
                 imageUrl: ''
                 /*inventory: ''*/
               })
+              this.props.setProduct(product.id)
             }}
           >
             SUBMIT CHANGES
@@ -72,7 +74,9 @@ class UpdateProduct extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  updateProduct: updates => dispatch(updateProductThunk(updates))
+  updateProduct: (productId, updates) =>
+    dispatch(updateProductThunk(productId, updates)),
+  setProduct: id => dispatch(setProductThunk(id))
 })
 
 export default connect(null, mapDispatchToProps)(UpdateProduct)
