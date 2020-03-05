@@ -4,8 +4,7 @@ const Product = require('./product')
 
 const Order = db.define('order', {
   shippingInfo: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: Sequelize.STRING
   },
   completed: {
     type: Sequelize.BOOLEAN,
