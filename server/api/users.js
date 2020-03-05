@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Product, Order} = require('../db/models')
+const {User, Product, OrderHistory, Order} = require('../db/models')
 module.exports = router
 
 const {adminsOnly, currentUserOnly, adminOrCurrentUser} = require('../utils')
@@ -76,6 +76,7 @@ router.put('/checkout/:userId', currentUserOnly, async (req, res, next) => {
   }
 })
 
+//NEED TO REVIEW THIS ROUTE
 //get all items in logged in user's cart
 //we want to get product id, name, imageUrl, quantity, currentPrice
 router.get('/:userId/cart', currentUserOnly, async (req, res, next) => {
