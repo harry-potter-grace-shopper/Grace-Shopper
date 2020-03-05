@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {me} from '../store'
-import {getCartThunk} from '../store/cart'
+import {getCartThunk, submitCartThunk} from '../store/cart'
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -13,12 +13,12 @@ class Checkout extends React.Component {
       address: ''
     }
     this.handleChange = this.handleChange.bind(this)
-    this.handleSubmitShipping = this.handleSubmitShipping.bind(this)
-    this.handleSubmitOrder = this.handleSubmitOrder.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   async componentDidMount() {
     await this.props.getUserInfo()
+
     if (this.props.user.id) {
       this.setState({
         firstName: this.props.user.firstName,
@@ -33,18 +33,18 @@ class Checkout extends React.Component {
   }
 
   handleChange = event => {
-    ;[event.target.name] = event.target.value
+    this.setState({
+      [event.target.name]: event.target.value
+    })
   }
 
-  handleSubmitShipping = event => {
+  handleSubmit = event => {
     event.preventDefault()
-  }
-
-  handleSubmitOrder = event => {
-    event.preventDefault()
-
-    // update order instance to completed="false"
-    // pass in thunk middleware to cartReducer
+    // console.log('this.props.user.id', this.props.user.id)
+    // console.log('this.state.address', this.state.address)
+    // console.log('this.state', this.state)
+    this.props.submitOrder(this.props.user.id, this.state.address)
+    this.props.history.push('/:userId/cart/checkout/confirm')
   }
 
   render() {
@@ -76,7 +76,8 @@ class Checkout extends React.Component {
               <h2>Order Total: $X.00</h2>
             </div>
           </div>
-
+        </div>
+        <div className="checkout-container">
           <div className="checkout-section">
             <h2>Shipping Info</h2>
             <form onSubmit={this.handleSubmitShipping}>
@@ -108,16 +109,15 @@ class Checkout extends React.Component {
                 value={this.state.address}
                 onChange={this.handleChange}
               />
-              <button type="submit">Save Shipping Info</button>
             </form>
           </div>
 
           <div className="checkout-section">
-            <h2>Payment Information</h2>
+            <h2>Payment Info</h2>
           </div>
 
           <div className="checkout-section">
-            <button type="submit" onClick={this.handleSubmitOrder}>
+            <button type="submit" onClick={this.handleSubmit}>
               Place Order
             </button>
           </div>
@@ -136,44 +136,8 @@ const mapDispatchToProps = dispatch => ({
   getUserInfo: () => dispatch(me()),
   getCart: userId => {
     dispatch(getCartThunk(userId))
-  }
+  },
+  submitOrder: (userId, address) => dispatch(submitCartThunk(userId, address))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)
-
-/*
-
-
-
-export const SUBMIT_ORDER = 'SUBMIT_ORDER'
-
-
-export const submitOrder = order => ({
-  type: SUBMIT_ORDER,
-  order
-})
-
-export const submitOrderThunk = (userId) => {
-  return async dispatch {
-    try {
-      const { data } = userId
-      ? await axios.put()  USER API ROUTE, completed="true"
-      : await axios.put()  GUEST API ROUTE, completed="true"
-      dispatch(submitOrder(data))
-    } catch (error) {
-      console.log('Problem with submitting order', error)
-    }
-  }
-}
-
-const orderReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SUBMIT_ORDER:
-      return {...state, action.order}
-  }
-}
-
-export default orderReducer
-
-
-*/

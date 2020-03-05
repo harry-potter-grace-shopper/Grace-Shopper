@@ -98,13 +98,19 @@ router.delete('/:userId/cart', currentUserOnly, async (req, res, next) => {
 //   }
 // })
 
+//route at checkout
+//sets completed to "true"
+//updates shipping address
 router.put('/checkout/:userId', currentUserOnly, async (req, res, next) => {
   try {
     const currentOrder = await Order.findOne({
       where: {userId: req.params.userId, completed: false}
     })
-    await currentOrder.update({completed: true})
-    await Order.create({userId: req.params.id})
+    await currentOrder.update(req.body)
+    const emptyOrder = await Order.create({shippingInfo: 'none'})
+    // const currentUser = await User.findOne({
+    //   where: {id: req.params.userId}
+    // })
     res.json(currentOrder)
   } catch (error) {
     next(error)
