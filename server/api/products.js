@@ -64,7 +64,6 @@ router.post('/', adminsOnly, async (req, res, next) => {
 router.put('/:id', adminsOnly, async (req, res, next) => {
   try {
     const updatedProduct = await Product.update(req.body, {
-      // Product.update returns num of rows changed and array of updated instances, handled this with returning:true and plain: true below
       where: {
         id: req.params.id //added which product to update
       },
