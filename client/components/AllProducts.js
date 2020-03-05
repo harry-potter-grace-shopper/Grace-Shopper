@@ -11,7 +11,7 @@ class AllProducts extends React.Component {
   render() {
     const {products} = this.props
     return (
-      <div>
+      <div className="all-products-page">
         {products.map(product => {
           return (
             <SingleProductCard

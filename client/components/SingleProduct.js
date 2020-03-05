@@ -12,14 +12,19 @@ class SingleProduct extends React.Component {
   render() {
     const {product, user} = this.props
     return (
-      <div>
-        <h2>{product.name}</h2>
-        <p>{product.description}</p>
-        <h3>{product.price}</h3>
+      <div className="single-product-page">
         <img src={product.imageUrl} />
-        <button onClick={() => this.props.addProduct(product.id, user.id)}>
-          Add To Cart
-        </button>
+        <div className="single-product-details">
+          <h2>{product.name}</h2>
+          <p>{product.description}</p>
+          <h3>${product.price}.00</h3>
+          <button
+            type="submit"
+            onClick={() => this.props.addProduct(product.id, user.id)}
+          >
+            Add To Cart
+          </button>
+        </div>
       </div>
     )
   }
