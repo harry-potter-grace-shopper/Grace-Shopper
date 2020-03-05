@@ -9,7 +9,7 @@ class Cart extends React.Component {
   // }
 
   render() {
-    const items = [
+    const products = [
       {
         id: 1,
         name: 'Blue Tamagotchi',
@@ -32,19 +32,19 @@ class Cart extends React.Component {
       <div className="cart-page">
         <h1>My Cart</h1>
         <div className="cart-container">
-          {items.map(item => (
-            <div className="cart-item" key={item.id}>
+          {products.map(product => (
+            <div className="cart-item" key={product.id}>
               <div className="cart-image">
-                <img src={item.imageUrl} />
+                <img src={product.imageUrl} />
               </div>
 
               <div className="cart-details">
-                <h3>{item.name}</h3>
-                <p>Quantity: {item.quantity}</p>
+                <h3>{product.name}</h3>
+                <p>Quantity: {product.quantity}</p>
                 <button type="button">Increase Qty</button>
                 <button type="button">Decrease Qty</button>
                 <button type="button">Remove Item</button>
-                <p>Price: ${item.price}.00</p>
+                <p>Price: ${product.price}.00</p>
               </div>
             </div>
           ))}

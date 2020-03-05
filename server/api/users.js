@@ -75,3 +75,17 @@ router.put('/checkout/:userId', currentUserOnly, async (req, res, next) => {
     next(error)
   }
 })
+
+//get all items in logged in user's cart
+//we want to get product id, name, imageUrl, quantity, currentPrice
+router.get('/:userId/cart', currentUserOnly, async (req, res, next) => {
+  try {
+    const userCart = await Order.findOne({
+      where: {userId: req.params.userId, completed: false},
+      include: {model: OrderHistory, include: {model: Product}}
+    })
+    res.json(userCart)
+  } catch (error) {
+    next(error)
+  }
+})
