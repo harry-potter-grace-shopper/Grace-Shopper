@@ -42,15 +42,15 @@ router.put('/:userId/cart', currentUserOnly, async (req, res, next) => {
     const currentOrder = await Order.findOne({
       where: {userId: req.params.userId, completed: false}
     })
-    if (
-      await OrderHistory.findOne({
-        where: {
-          productId: currentProduct.id,
-          orderId: currentOrder.id
-        }
-      })
-    ) {
-      res.sendStatus('already in your cart')
+    const orderItem = await OrderHistory.findOne({
+      where: {
+        productId: currentProduct.id,
+        orderId: currentOrder.id
+      }
+    })
+    if (orderItem) {
+      orderItem.increment('quantity')
+      res.json(orderItem)
     }
     await currentOrder.addProduct(currentProduct)
     const cartItem = await OrderHistory.findOne({
@@ -80,27 +80,6 @@ router.delete('/:userId/cart', currentUserOnly, async (req, res, next) => {
   }
 })
 
-//put route to update order quantity (add or recrease) IN PROGRESS
-// router.put('/:userId/cart/:productId/:action', currentUserOnly, async (req, res, next) => {
-//   try {
-//     const {userId, productId, action} = req.params
-//     const order = await OrderHistory.findOne({where: {
-//       productId: productId.id, userId: userId.id
-//     }})
-//     if(action === remove) {
-//       order.update({quantity: order.quantity--})
-//     } else {
-//       if()
-//       order.update({quantity: order.quantity--})
-//     }
-//   } catch (e) {
-//     next(e)
-//   }
-// })
-
-//route at checkout
-//sets completed to "true"
-//updates shipping address
 router.put('/checkout/:userId', currentUserOnly, async (req, res, next) => {
   try {
     const currentOrder = await Order.findOne({
