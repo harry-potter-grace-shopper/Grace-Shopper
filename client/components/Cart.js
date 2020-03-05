@@ -17,31 +17,34 @@ class Cart extends React.Component {
           <p> Your Cart is empty</p>
         </div>
       )
-    return (
-      <div className="cart-page">
-        <h1>My Cart</h1>
-        <div className="cart-container">
-          {products.map(product => (
-            <div className="cart-item" key={product.id}>
-              <div className="cart-image">
-                <img src={product.imageUrl} />
-              </div>
+    else {
+      const tots = products.reduce((acc, val) => acc + val.price, 0)
+      return (
+        <div className="cart-page">
+          <h1>My Cart</h1>
+          <div className="cart-container">
+            {products.map(product => (
+              <div className="cart-item" key={product.id}>
+                <div className="cart-image">
+                  <img src={product.imageUrl} />
+                </div>
 
-              <div className="cart-details">
-                <h3>{product.name}</h3>
-                <p>Quantity: {product.quantity}</p>
-                <button type="button">Increase Qty</button>
-                <button type="button">Decrease Qty</button>
-                <button type="button">Remove Item</button>
-                <p>Price: ${product.price}.00</p>
+                <div className="cart-details">
+                  <h3>{product.name}</h3>
+                  <p>Quantity: {product.quantity}</p>
+                  <button type="button">Increase Qty</button>
+                  <button type="button">Decrease Qty</button>
+                  <button type="button">Remove Item</button>
+                  <p>Price: ${product.price}.00</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <h2>Total: ${tots}.00</h2>
+          <button type="submit">Checkout</button>
         </div>
-        <h2>Total: $X.00</h2>
-        <button type="submit">Checkout</button>
-      </div>
-    )
+      )
+    }
   }
 }
 
