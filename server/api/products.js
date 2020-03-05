@@ -5,6 +5,18 @@ const {adminsOnly} = require('../utils')
 
 module.exports = router
 
+router.param('id', async (req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.id)
+    if (product) {
+      req.product = product
+      next()
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll()
@@ -14,52 +26,20 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
-  // req.product
-  // res.json(req.product)
+router.get('/:id', (req, res, next) => {
   try {
-    const product = await Product.findByPk(req.params.id)
-    if (product) {
-      res.json(product)
+    if (req.product) {
+      res.json(req.product)
     } else {
-      // you can send this back or you can pass this on to your error handling middleware if you wanted to
-      // const error = new Error('product is not defined');
-      // error.status = 404;
-      // next(error);
-      res.status(404).json('Product is not defined!')
+      const error = new Error('This product is not defined')
+      error.status = 404
+      next(error)
     }
   } catch (error) {
     next(error)
   }
 })
 
-// router.param
-/*
-router.param(async (id, req, res, next) => {
-  try {
-    const product = await Product.findByPk(req.params.id)
-    if (product) {
-      req.product = product;
-      next();
-    } catch (e) {
-      next(e);
-    }
-})
-*/
-
-// router.param
-/*
-router.param(async (id, req, res, next) => {
-  try {
-    const product = await Product.findByPk(req.params.id)
-    if (product) {
-      req.product = product;
-      next();
-    } catch (e) {
-      next(e);
-    }
-})
-*/
 
 router.post('/', adminsOnly, async (req, res, next) => {
   try {
