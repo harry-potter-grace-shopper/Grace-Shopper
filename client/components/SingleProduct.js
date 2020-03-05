@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {setProductThunk} from '../store/singleProduct'
+import {addProductThunk} from '../store/cart'
 
 class SingleProduct extends React.Component {
   componentDidMount() {
@@ -8,12 +9,8 @@ class SingleProduct extends React.Component {
     this.props.setProduct(id)
   }
 
-  // handleSubmit() {
-
-  // }
-
   render() {
-    const {product} = this.props
+    const {product, user} = this.props
     return (
       <div className="single-product-page">
         <img src={product.imageUrl} />
@@ -21,20 +18,27 @@ class SingleProduct extends React.Component {
           <h2>{product.name}</h2>
           <p>{product.description}</p>
           <h3>${product.price}.00</h3>
-
-          {/* <button onClick={this.handleSubmit}>Add To Cart</button> */}
         </div>
+        <button
+          type="submit"
+          onClick={() => this.props.addProduct(product.id, user.id)}
+        >
+          Add To Cart
+        </button>
       </div>
     )
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  setProduct: id => dispatch(setProductThunk(id))
+  setProduct: id => dispatch(setProductThunk(id)),
+  addProduct: (productId, userId) =>
+    dispatch(addProductThunk(productId, userId))
 })
 
 const mapStateToProps = state => ({
-  product: state.product
+  product: state.product,
+  user: state.user
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
