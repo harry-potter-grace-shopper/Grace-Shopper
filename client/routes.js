@@ -8,6 +8,8 @@ import AllProducts from './components/AllProducts'
 import {me} from './store'
 import AllUsers from './components/AllUsers'
 import Cart from './components/Cart'
+import Checkout from './components/Checkout'
+import OrderConfirmation from './components/OrderConfirmation'
 
 /**
  * COMPONENT
@@ -29,6 +31,11 @@ class Routes extends Component {
         <Route path="/products/:id" component={SingleProduct} />
         <Route exact path="/" component={AllProducts} />
         <Route exact path="/home" component={AllProducts} />
+        <Route exact path="/:userid/cart/checkout" component={Checkout} />
+        <Route
+          path="/:userid/cart/checkout/confirm"
+          component={OrderConfirmation}
+        />
         {/* these routes v that does not need to be seen by all users should also be protected in the frontend to check if you are loggied in or not */}
         <Route exact path="/users" component={AllUsers} />
         {isLoggedIn && (
