@@ -3,31 +3,20 @@ import {connect} from 'react-redux'
 import {getCartThunk} from '../store/cart'
 
 class Cart extends React.Component {
-  // componentDidMount() {
-  //   const {data: {id} } = await axios.get(`/api/`)
-  //   this.props.getCart(data.id)
-  // }
+  componentDidMount() {
+    const userId = this.props.user.id
+    this.props.getCart(userId)
+  }
 
   render() {
-    const products = [
-      {
-        id: 1,
-        name: 'Blue Tamagotchi',
-        quantity: 1,
-        price: 5,
-        imageUrl:
-          'https://images-na.ssl-images-amazon.com/images/I/61vT7Txan5L._AC_SX679_.jpg'
-      },
-      {
-        id: 2,
-        name: 'Green Tamagotchi',
-        quantity: 1,
-        price: 50,
-        imageUrl:
-          'https://images-na.ssl-images-amazon.com/images/I/61vT7Txan5L._AC_SX679_.jpg'
-      }
-    ]
-
+    const products = this.props.products
+    if (products.length === 0)
+      return (
+        <div className="cart-page">
+          <h1>My Cart</h1>
+          <p> Your Cart is empty</p>
+        </div>
+      )
     return (
       <div className="cart-page">
         <h1>My Cart</h1>
@@ -57,11 +46,14 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  cart: state.cart
+  user: state.user,
+  products: state.cart.products
 })
 
 const mapDispatchToProps = dispatch => ({
-  getCart: userId => dispatch(getCartThunk(userId))
+  getCart: userId => {
+    dispatch(getCartThunk(userId))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
