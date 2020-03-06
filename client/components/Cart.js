@@ -1,11 +1,24 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {getCartThunk} from '../store/cart'
+import {getCartThunk, incrementThunk, decrementThunk} from '../store/cart'
 
 class Cart extends React.Component {
   componentDidMount() {
     const userId = this.props.user.id
-    this.props.getCart(userId)
+    const {getCart} = this.props
+    getCart(userId)
+  }
+  handleClick(event, product) {
+    const orderId = product.orders[0].id
+    const action = event.target.value
+    console.log(action)
+    event.preventDefault()
+    if (action === 'increment') {
+      this.props.incrementThunk(product.id, orderId)
+    }
+    if (action === 'decrement') {
+      this.props.decrementThunk(product.id, orderId)
+    }
   }
 
   render() {
@@ -28,12 +41,27 @@ class Cart extends React.Component {
                 <div className="cart-image">
                   <img src={product.imageUrl} />
                 </div>
-
                 <div className="cart-details">
                   <h3>{product.name}</h3>
-                  <p>Quantity: {product.quantity}</p>
-                  <button type="button">Increase Qty</button>
-                  <button type="button">Decrease Qty</button>
+                  <p>Quantity: {product.orders[0].order_history.quantity}</p>
+                  <button
+                    type="button"
+                    value="increment"
+                    onClick={() => {
+                      this.handleClick(event, product)
+                    }}
+                  >
+                    Increase Qty
+                  </button>
+                  <button
+                    type="button"
+                    value="decrement"
+                    onClick={() => {
+                      this.handleClick(event, product)
+                    }}
+                  >
+                    Decrease Qty
+                  </button>
                   <button type="button">Remove Item</button>
                   <p>Price: ${product.price}.00</p>
                 </div>
@@ -56,6 +84,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getCart: userId => {
     dispatch(getCartThunk(userId))
+  },
+  incrementThunk: (productId, orderId) => {
+    dispatch(incrementThunk(productId, orderId))
+  },
+  decrementThunk: (productId, orderId) => {
+    dispatch(decrementThunk(productId, orderId))
   }
 })
 

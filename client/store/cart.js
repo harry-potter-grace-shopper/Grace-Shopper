@@ -3,6 +3,8 @@ import axios from 'axios'
 const GET_CART = 'GET_CART'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const SUBMIT_CART = 'SUBMIT_CART'
+const INCREMENT = 'INCREMENT'
+const DECREMENT = 'DECREMENT'
 
 const getCart = cart => ({
   type: GET_CART,
@@ -62,6 +64,55 @@ export const submitCartThunk = (userId, address) => {
   }
 }
 
+const increment = quantityObj => ({
+  type: INCREMENT,
+  quantityObj
+})
+
+export const incrementThunk = (productId, orderId) => {
+  return async dispatch => {
+    console.log('helllllolo')
+    try {
+      console.log(
+        'IN THE INCREMENT THUNK this  is the product',
+        productId,
+        'this is the ORDDDDDEERRRRRRRRRRR',
+        orderId
+      )
+      const {quantity} = await axios.put(
+        `/api/quantity/${productId}/${orderId}/add`
+      )
+      const quantityObj = {
+        [productId]: quantity
+      }
+      dispatch(increment(quantityObj))
+    } catch (e) {
+      next(e)
+    }
+  }
+}
+
+const decrement = quantityObj => ({
+  type: DECREMENT,
+  quantityObj
+})
+
+export const decrementThunk = (productId, orderId) => {
+  return async dispatch => {
+    try {
+      const {quantity} = await axios.put(
+        `/api/quantity/${productId}/${orderId}/remove`
+      )
+      const quantityObj = {
+        [productId]: quantity
+      }
+      dispatch(decrement(quantityObj))
+    } catch (e) {
+      next(e)
+    }
+  }
+}
+
 const initialState = {
   products: []
 }
@@ -74,6 +125,10 @@ const cartReducer = (state = initialState, action) => {
       return {...state, products: [...state.products, action.product]}
     case SUBMIT_CART:
       return {...state, products: []}
+    case INCREMENT:
+      return {...state, ...action.quantityObj}
+    case DECREMENT:
+      return {...state, ...action.quantityObj}
     default:
       return state
   }

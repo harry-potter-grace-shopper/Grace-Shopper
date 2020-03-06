@@ -49,18 +49,18 @@ router.put('/:userId/cart', currentUserOnly, async (req, res, next) => {
       }
     })
     if (orderItem) {
-      orderItem.increment('quantity')
-      res.json(orderItem)
+      res.sendStatus('already in your cart')
+    } else {
+      await currentOrder.addProduct(currentProduct)
+      const cartItem = await OrderHistory.findOne({
+        where: {
+          productId: currentProduct.id,
+          orderId: currentOrder.id
+        }
+      })
+      await cartItem.update({currentPrice: currentProduct.price})
+      res.json(currentProduct)
     }
-    await currentOrder.addProduct(currentProduct)
-    const cartItem = await OrderHistory.findOne({
-      where: {
-        productId: currentProduct.id,
-        orderId: currentOrder.id
-      }
-    })
-    await cartItem.update({currentPrice: currentProduct.price})
-    res.json(currentProduct)
   } catch (error) {
     next(error)
   }
