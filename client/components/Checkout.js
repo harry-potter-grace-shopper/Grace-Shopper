@@ -65,7 +65,6 @@ class Checkout extends React.Component {
                     <h3>{product.name}</h3>
                     <p>Quantity: {product.orders[0].order_history.quantity}</p>
                     <p>Price: ${product.price}.00</p>
-                    <h3>Total: $X.00</h3>
                   </div>
                 </div>
               ))}
