@@ -46,7 +46,6 @@ button:hover {
 
 nav a {
   display: inline-block;
-  vertical-align: middle;
   margin: 1em;
   font-size: 20px;
   color: white;
@@ -62,6 +61,7 @@ nav a {
 .all-products-page {
   margin-top: 3rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -73,6 +73,7 @@ nav a {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 300px;
   width: 200px;
   padding: 2rem;
   margin: 2rem;
@@ -144,6 +145,7 @@ nav a {
 /* CHECKOUT PAGE STYLING */
 
 .checkout-page {
+  margin-top: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -167,6 +169,7 @@ nav a {
 /* GENERIC PAGE STYLING */
 
 .page-container {
+  margin: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
