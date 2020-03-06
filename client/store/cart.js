@@ -1,4 +1,5 @@
 import axios from 'axios'
+import user from './user'
 
 const GET_CART = 'GET_CART'
 const ADD_PRODUCT = 'ADD_PRODUCT'
@@ -7,7 +8,7 @@ const SUBMIT_CART = 'SUBMIT_CART'
 const INCREMENT = 'INCREMENT'
 const DECREMENT = 'DECREMENT'
 const CHECKOUT_CART = 'SUBMIT_CART'
-
+const REMOVE_ITEM = 'REMOVE_ITEM'
 
 const getCart = cart => ({
   type: GET_CART,
@@ -51,13 +52,11 @@ const checkoutCart = cart => ({
 export const checkoutCartThunk = (userId, shippingInfo) => {
   return async dispatch => {
     try {
-
       const {data} = await axios.put(
         `/api/users/checkout/${userId}`,
         shippingInfo
       )
       dispatch(checkoutCart(data))
-
     } catch (error) {
       console.log('Problem with submitting order', error)
     }
@@ -100,6 +99,23 @@ export const decrementThunk = (productId, orderId) => {
         [productId]: quantity
       }
       dispatch(decrement(quantityObj))
+    } catch (e) {
+      next(e)
+    }
+  }
+}
+
+const removedItem = productId => ({
+  type: REMOVE_ITEM,
+  productId
+})
+
+export const removeItem = (product, userId) => {
+  return async dispatch => {
+    try {
+      console.log(product.id, userId, 1)
+      await axios.delete(`/api/users/${userId}/cart`)
+      dispatch(removedItem(product.id))
     } catch (e) {
       next(e)
     }

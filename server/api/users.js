@@ -69,6 +69,7 @@ router.put('/:userId/cart', currentUserOnly, async (req, res, next) => {
 ////removing product from the cart
 router.delete('/:userId/cart', currentUserOnly, async (req, res, next) => {
   try {
+    console.log(req.body.id)
     const removedProduct = await Product.findByPk(req.body.id)
     const currentOrder = await Order.findOne({
       where: {userId: req.params.userId, completed: false}
@@ -80,7 +81,7 @@ router.delete('/:userId/cart', currentUserOnly, async (req, res, next) => {
   }
 })
 
-router.put('/checkout/:userId', currentUserOnly, async (req, res, next) => {
+router.put('/checkout/:userId/', currentUserOnly, async (req, res, next) => {
   try {
     const currentOrder = await Order.findOne({
       where: {userId: req.params.userId, completed: false}
