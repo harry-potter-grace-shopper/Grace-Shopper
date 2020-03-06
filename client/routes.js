@@ -31,18 +31,15 @@ class Routes extends Component {
         <Route path="/products/:id" component={SingleProduct} />
         <Route exact path="/" component={AllProducts} />
         <Route exact path="/home" component={AllProducts} />
-        <Route exact path="/:userid/cart/checkout" component={Checkout} />
-        <Route
-          path="/:userid/cart/checkout/confirm"
-          component={OrderConfirmation}
-        />
+        <Route path="/confirm" component={OrderConfirmation} />
         {/* these routes v that does not need to be seen by all users should also be protected in the frontend to check if you are loggied in or not */}
         <Route exact path="/users" component={AllUsers} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
-            <Route path="/:userid/cart" component={Cart} />
+            <Route exact path="/:userid/cart" component={Cart} />
+            <Route path="/:userid/cart/checkout" component={Checkout} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

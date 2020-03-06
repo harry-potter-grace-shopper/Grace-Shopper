@@ -39,11 +39,8 @@ class Checkout extends React.Component {
     const shippingInfo = {
       address: this.state.address
     }
-    // console.log('this.props.user.id', this.props.user.id)
-    // console.log('this.state.address', this.state.address)
-    // console.log('this.state', this.state)
     this.props.checkoutCart(this.props.user.id, shippingInfo)
-    this.props.history.push('/:userId/cart/checkout/confirm')
+    this.props.history.push('/confirm')
   }
 
   render() {
