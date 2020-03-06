@@ -42,7 +42,7 @@ const singleProductReducer = (state = initialState, action) => {
     case SET_PRODUCT:
       return action.product
     case UPDATE_PRODUCT:
-      return {...state, product: action.updateProduct}
+      return action.updatedProduct
     default:
       return state
   }
