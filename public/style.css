@@ -26,7 +26,8 @@ nav a {
 
 .all-products-page {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  align-content: center;
 }
 
 .single-product-card {
