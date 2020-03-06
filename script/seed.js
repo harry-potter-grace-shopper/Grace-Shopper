@@ -40,6 +40,59 @@ async function seed() {
       'https://images-na.ssl-images-amazon.com/images/I/61vT7Txan5L._AC_SX679_.jpg'
   })
 
+  await Product.create({
+    name: 'Ban Dai',
+    price: 21,
+    description:
+      'Ban Dai - Tamagotchi Gudetamatama Sitting ver.Tamagotchi & Cover Set. The instruction manual for this product is in Japanese. Instructions in English are not included',
+    imageUrl:
+      'https://images-na.ssl-images-amazon.com/images/I/61PyNKmgveL._AC_SL1500_.jpg'
+  })
+
+  await Product.create({
+    name: 'Purple Japan Tama',
+    price: 57,
+    description:
+      'Tamagotchi from meets (Meets Tamagotchi), pastel Meets ver. Purple appeared! Or born twins in addition to the m! X play in the Tamagotchi Meets, Tama pet ranks. I just Tamagotchi different ultra-unique every time (Now Tama) grow up. Variations ∞ (infinity) !? Allowed to go out to further grow the now-Tama "Tamagotchi meets app", you brag about the country of the user. Use battery: single 4x2 (sold separately)',
+    imageUrl:
+      'https://images-na.ssl-images-amazon.com/images/I/7181ooeU4lL._AC_SL1000_.jpg'
+  })
+
+  await Product.create({
+    name: 'Meets Fantasy Purple',
+    price: 80,
+    description: 'This item is Brand new & factory sealed.',
+    imageUrl:
+      'https://images-na.ssl-images-amazon.com/images/I/91pVoAiJ%2BVL._AC_SL1500_.jpg'
+  })
+
+  await Product.create({
+    name: 'Chansey Check!',
+    price: 51,
+    description:
+      ' A mobile character LCD toy of the new character "Watch Lynn", a big success in the program. Specially designed specification that can check todays lucky degree with Watch Lynns Lucky Check, which is also directed at animation, and can play conversation. I always attach with a belt and stay with me. Use battery: CR2032 ~ 1 (included)',
+    imageUrl:
+      'https://images-na.ssl-images-amazon.com/images/I/61Z%2Bx8Kus4L._AC_SL1000_.jpg'
+  })
+
+  await Product.create({
+    name: '4U Purple',
+    price: 69,
+    description:
+      'Product introduction Reincarnation completely new Tamagotchi, which was equipped with a "Tatchitsu Shin feature" a new sense as a "Life Tools", appeared!',
+    imageUrl:
+      'https://images-na.ssl-images-amazon.com/images/I/71FKOH7KBkL._AC_SL1370_.jpg'
+  })
+
+  await Product.create({
+    name: '4U White',
+    price: 69,
+    description:
+      'A new generation of TAMAGOTCHI, gTAMAGOTCHI 4Uh. You can connect with others! TAMAGOTCHI 4U allows you to connect with other by using the touch function of the device. ',
+    imageUrl:
+      'https://images-na.ssl-images-amazon.com/images/I/71qgskHqfhL._AC_SL1389_.jpg'
+  })
+
   const order1 = await Order.create({
     shippingInfo: '23 Maple Drive, Brooklyn, NY, 11135',
     completed: true

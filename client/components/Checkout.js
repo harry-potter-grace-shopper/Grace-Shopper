@@ -45,6 +45,7 @@ class Checkout extends React.Component {
 
   render() {
     const products = this.props.products
+
     const tots = products.reduce((acc, val) => acc + val.price, 0)
     return (
       <div className="checkout-page">
@@ -62,7 +63,7 @@ class Checkout extends React.Component {
 
                   <div className="cart-details">
                     <h3>{product.name}</h3>
-                    <p>Quantity: {product.quantity}</p>
+                    <p>Quantity: {product.orders[0].order_history.quantity}</p>
                     <p>Price: ${product.price}.00</p>
                     <h3>Total: $X.00</h3>
                   </div>

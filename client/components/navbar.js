@@ -4,9 +4,8 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div id="nav-bar">
-    {/* <h1>Tamagotchi Store</h1> */}
+const Navbar = ({handleClick, isLoggedIn, user}) => (
+  <div>
     <nav>
       {isLoggedIn ? (
         <div className="nav-items">
@@ -23,7 +22,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
 
           <div>
             <Link to="/home">Home</Link>
-            <Link to="/:userId/cart">Cart</Link>
+            {!user.admin ? <Link to="/:userId/cart">Cart</Link> : <span />}
+            {user.admin ? <Link to="/users">Users</Link> : <span />}
             <a href="#" onClick={handleClick}>
               Logout
             </a>
@@ -41,12 +41,10 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           </div>
 
           {/* The navbar will show these links before you log in */}
-          <div>
-            <Link to="/home">Home</Link>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-            <Link to="/guest/cart">Cart</Link>
-          </div>
+          <Link to="/">Home</Link>
+          <Link to="/login">Login</Link>
+          <Link to="/signup">Sign Up</Link>
+          {/* <Link to="/:userId/cart">Cart</Link> */}
         </div>
       )}
     </nav>
@@ -58,7 +56,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user
   }
 }
 

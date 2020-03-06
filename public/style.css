@@ -48,12 +48,12 @@ nav a {
   display: inline-block;
   margin: 1em;
   font-size: 20px;
-  color: white;
+  color: black;
 }
 
 .nav-items {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 /* ALL PRODUCTS PAGE STYLING */
@@ -63,6 +63,7 @@ nav a {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-content: center;
 }
 
 .all-products-page a:visited {
