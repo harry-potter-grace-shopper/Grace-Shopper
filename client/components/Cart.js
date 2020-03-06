@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 import {getCartThunk, incrementThunk, decrementThunk} from '../store/cart'
 
@@ -73,7 +74,9 @@ class Cart extends React.Component {
             ))}
           </div>
           <h2>Total: ${tots}.00</h2>
-          <button type="submit">Checkout</button>
+          <Link to={`/${this.props.user.id}/cart/checkout`}>
+            <button type="submit">Checkout</button>
+          </Link>
         </div>
       )
     }
