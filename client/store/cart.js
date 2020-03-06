@@ -48,15 +48,11 @@ const submitCart = (userId, address) => ({
 
 export const submitCartThunk = (userId, address) => {
   return async dispatch => {
-    console.log('userId', userId)
-    console.log('address', address)
     try {
-      console.log('we are in the try block')
       const {data} = await axios.put(`/api/users/checkout/${userId}`, {
         completed: true,
         shippingInfo: address
       })
-      console.log('data', data)
       dispatch(submitCart(data))
     } catch (error) {
       console.log('Problem with submitting order', error)
@@ -71,14 +67,7 @@ const increment = quantityObj => ({
 
 export const incrementThunk = (productId, orderId) => {
   return async dispatch => {
-    console.log('helllllolo')
     try {
-      console.log(
-        'IN THE INCREMENT THUNK this  is the product',
-        productId,
-        'this is the ORDDDDDEERRRRRRRRRRR',
-        orderId
-      )
       const {quantity} = await axios.put(
         `/api/quantity/${productId}/${orderId}/add`
       )
@@ -87,7 +76,7 @@ export const incrementThunk = (productId, orderId) => {
       }
       dispatch(increment(quantityObj))
     } catch (e) {
-      next(e)
+      console.log('problem with the increment thunk', e)
     }
   }
 }

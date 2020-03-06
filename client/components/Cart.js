@@ -19,6 +19,9 @@ class Cart extends React.Component {
     if (action === 'decrement') {
       this.props.decrementThunk(product.id, orderId)
     }
+    const userId = this.props.user.id
+    const {getCart} = this.props
+    getCart(userId)
   }
 
   render() {
