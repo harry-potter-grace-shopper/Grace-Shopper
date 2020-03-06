@@ -73,9 +73,9 @@ const cartReducer = (state = initialState, action) => {
     case ADD_PRODUCT:
       return {...state, products: [...state.products, action.product]}
     case SUBMIT_CART:
-      return {...state, products: []}
-    default:
       return state
+    default:
+      return {...state}
   }
 }
 

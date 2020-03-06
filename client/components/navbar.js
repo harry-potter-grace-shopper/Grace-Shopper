@@ -5,28 +5,49 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>Tamagotchi Store</h1>
+  <div id="nav-bar">
+    {/* <h1>Tamagotchi Store</h1> */}
     <nav>
       {isLoggedIn ? (
-        <div>
+        <div className="nav-items">
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <Link to="/:userId/cart">Cart</Link>
 
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
+          <div>
+            <Link to="/home">
+              <img
+                src="https://www.logolynx.com/images/logolynx/d4/d429675b3b80e9cae4ab2f1dc734926a.gif"
+                width="150px"
+              />
+            </Link>
+          </div>
+
+          <div>
+            <Link to="/:userId/cart">Cart</Link>
+            <a href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </div>
         </div>
       ) : (
-        <div>
+        <div className="nav-items">
+          <div>
+            <Link to="/home">
+              <img
+                src="https://www.logolynx.com/images/logolynx/d4/d429675b3b80e9cae4ab2f1dc734926a.gif"
+                width="150px"
+              />
+            </Link>
+          </div>
+
           {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
+          <div>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign Up</Link>
+            <Link to="/guest/cart">Cart</Link>
+          </div>
         </div>
       )}
     </nav>
-    <hr />
   </div>
 )
 

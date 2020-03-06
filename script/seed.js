@@ -16,7 +16,7 @@ async function seed() {
   })
 
   const prod1 = await Product.create({
-    name: 'On Magic - Purple',
+    name: 'Purple Magic',
     price: 51,
     description:
       'New generation tamagotchi. Raise your My Tama, feed and care for it, send it on playdates. Color: Purple',
@@ -24,13 +24,15 @@ async function seed() {
       'https://images-na.ssl-images-amazon.com/images/I/71b84TxN1BL._AC_SX679_.jpg'
   })
   const prod2 = await Product.create({
-    name: 'On Fairy - Blue',
+    name: 'White Magic',
     price: 51,
     description:
-      'New generation tamagotchi. Raise your My Tama, feed and care for it, send it on playdates. Color: Blue'
+      'New generation tamagotchi. Raise your My Tama, feed and care for it, send it on playdates. Color: White',
+    imageUrl:
+      'https://images-na.ssl-images-amazon.com/images/I/716Nk-BMlTL._AC_SX569_.jpg'
   })
   const prod3 = await Product.create({
-    name: 'On Magic - Green',
+    name: 'Green Magic',
     price: 47,
     description:
       'New generation tamagotchi. Raise your My Tama, feed and care for it, send it on playdates. Color: Green',

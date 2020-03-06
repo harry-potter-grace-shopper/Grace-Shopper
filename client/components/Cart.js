@@ -13,7 +13,7 @@ class Cart extends React.Component {
     if (products.length === 0)
       return (
         <div className="cart-page">
-          <h1>My Cart</h1>
+          <h1>Shopping Cart</h1>
           <p> Your Cart is empty</p>
         </div>
       )
