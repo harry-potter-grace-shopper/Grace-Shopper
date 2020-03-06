@@ -7,7 +7,7 @@ export const SingleProductCard = props => {
     <Link to={`/products/${id}`}>
       <div className="single-product-card">
         <h2>{name}</h2>
-        <img src={imageUrl} width="200" />
+        <img src={imageUrl} width="150px" />
         <h3>${price}.00</h3>
       </div>
     </Link>

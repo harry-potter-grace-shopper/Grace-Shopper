@@ -6,20 +6,40 @@ import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn, user}) => (
   <div>
-    <h1>Tamagotchi Store</h1>
     <nav>
       {isLoggedIn ? (
-        <div>
+        <div className="nav-items">
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          {!user.admin ? <Link to="/:userId/cart">Cart</Link> : <span />}
-          {user.admin ? <Link to="/users">Users</Link> : <span />}
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
+
+          <div>
+            <Link to="/home">
+              <img
+                src="https://www.logolynx.com/images/logolynx/d4/d429675b3b80e9cae4ab2f1dc734926a.gif"
+                width="150px"
+              />
+            </Link>
+          </div>
+
+          <div>
+            <Link to="/home">Home</Link>
+            {!user.admin ? <Link to="/:userId/cart">Cart</Link> : <span />}
+            {user.admin ? <Link to="/users">Users</Link> : <span />}
+            <a href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </div>
         </div>
       ) : (
-        <div>
+        <div className="nav-items">
+          <div>
+            <Link to="/home">
+              <img
+                src="https://www.logolynx.com/images/logolynx/d4/d429675b3b80e9cae4ab2f1dc734926a.gif"
+                width="150px"
+              />
+            </Link>
+          </div>
+
           {/* The navbar will show these links before you log in */}
           <Link to="/">Home</Link>
           <Link to="/login">Login</Link>
@@ -28,7 +48,6 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
         </div>
       )}
     </nav>
-    <hr />
   </div>
 )
 

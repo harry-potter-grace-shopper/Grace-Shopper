@@ -85,12 +85,15 @@ router.put('/checkout/:userId', currentUserOnly, async (req, res, next) => {
     const currentOrder = await Order.findOne({
       where: {userId: req.params.userId, completed: false}
     })
-    await currentOrder.update(req.body)
-    const emptyOrder = await Order.create({shippingInfo: 'none'})
-    // const currentUser = await User.findOne({
-    //   where: {id: req.params.userId}
-    // })
+    await currentOrder.update({
+      completed: true,
+      shippingInfo: req.body.address
+    })
     res.json(currentOrder)
+
+    const newEmptyOrder = await Order.create({shippingInfo: 'none'})
+
+    await newEmptyOrder.setUser(req.params.userId)
   } catch (error) {
     next(error)
   }

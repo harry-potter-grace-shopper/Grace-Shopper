@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {me} from '../store'
-import {getCartThunk, submitCartThunk} from '../store/cart'
+import {getCartThunk, checkoutCartThunk} from '../store/cart'
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -18,14 +18,13 @@ class Checkout extends React.Component {
 
   async componentDidMount() {
     await this.props.getUserInfo()
+    const userId = this.props.user.id
+    await this.props.getCart(userId)
 
     if (this.props.user.id) {
       this.setState({
         email: this.props.user.email
       })
-
-      const userId = this.props.user.id
-      this.props.getCart(userId)
     }
   }
 
@@ -37,15 +36,17 @@ class Checkout extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault()
-    // console.log('this.props.user.id', this.props.user.id)
-    // console.log('this.state.address', this.state.address)
-    // console.log('this.state', this.state)
-    this.props.submitOrder(this.props.user.id, this.state.address)
-    this.props.history.push('/:userId/cart/checkout/confirm')
+    const shippingInfo = {
+      address: this.state.address
+    }
+    this.props.checkoutCart(this.props.user.id, shippingInfo)
+    this.props.history.push('/confirm')
   }
 
   render() {
     const products = this.props.products
+
+    const tots = products.reduce((acc, val) => acc + val.price, 0)
     return (
       <div className="checkout-page">
         <h1>Checkout</h1>
@@ -62,15 +63,14 @@ class Checkout extends React.Component {
 
                   <div className="cart-details">
                     <h3>{product.name}</h3>
-                    <p>Quantity: {product.quantity}</p>
+                    <p>Quantity: {product.orders[0].order_history.quantity}</p>
                     <p>Price: ${product.price}.00</p>
-                    <h3>Total: $X.00</h3>
                   </div>
                 </div>
               ))}
             </div>
             <div>
-              <h2>Order Total: $X.00</h2>
+              <h2>Order Total: ${tots}.00</h2>
             </div>
           </div>
         </div>
@@ -134,7 +134,8 @@ const mapDispatchToProps = dispatch => ({
   getCart: userId => {
     dispatch(getCartThunk(userId))
   },
-  submitOrder: (userId, address) => dispatch(submitCartThunk(userId, address))
+  checkoutCart: (userId, shippingInfo) =>
+    dispatch(checkoutCartThunk(userId, shippingInfo))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

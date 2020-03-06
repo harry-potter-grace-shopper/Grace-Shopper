@@ -1,9 +1,10 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 a {
   text-decoration: none;
+  font-weight: bold;
 }
 
 label {
@@ -15,22 +16,66 @@ form div {
   display: inline-block;
 }
 
+button {
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: rgb(196, 95, 117);
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  display: inline-block;
+  border: none;
+  transition: all 0.4s ease 0s;
+}
+
+button:hover {
+  background: #434343;
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
+  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
+  transition: all 0.4s ease 0s;
+}
+
 /* NAV BAR STYLING */
+
+#nav-bar {
+  background: rgb(196, 95, 117);
+  height: 5em;
+}
 
 nav a {
   display: inline-block;
   margin: 1em;
+  font-size: 20px;
+  color: black;
+}
+
+.nav-items {
+  display: flex;
+  /* justify-content: space-between; */
 }
 
 /* ALL PRODUCTS PAGE STYLING */
 
 .all-products-page {
+  margin-top: 3rem;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   align-content: center;
 }
 
+.all-products-page a:visited {
+  color: black;
+}
+
 .single-product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 300px;
+  width: 200px;
   padding: 2rem;
   margin: 2rem;
   -webkit-box-shadow: -3px 11px 32px 0px rgba(209, 209, 209, 1);
@@ -63,6 +108,8 @@ nav a {
 /* CART STYLING */
 
 .cart-page {
+  margin-top: 3rem;
+  margin-bottom: 5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -99,6 +146,7 @@ nav a {
 /* CHECKOUT PAGE STYLING */
 
 .checkout-page {
+  margin-top: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -122,6 +170,7 @@ nav a {
 /* GENERIC PAGE STYLING */
 
 .page-container {
+  margin: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
