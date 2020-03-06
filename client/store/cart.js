@@ -2,9 +2,12 @@ import axios from 'axios'
 
 const GET_CART = 'GET_CART'
 const ADD_PRODUCT = 'ADD_PRODUCT'
+
 const SUBMIT_CART = 'SUBMIT_CART'
 const INCREMENT = 'INCREMENT'
 const DECREMENT = 'DECREMENT'
+const CHECKOUT_CART = 'SUBMIT_CART'
+
 
 const getCart = cart => ({
   type: GET_CART,
@@ -40,20 +43,21 @@ export const addProductThunk = (productId, userId) => {
   }
 }
 
-const submitCart = (userId, address) => ({
-  type: SUBMIT_CART,
-  userId,
-  address
+const checkoutCart = cart => ({
+  type: CHECKOUT_CART,
+  cart
 })
 
-export const submitCartThunk = (userId, address) => {
+export const checkoutCartThunk = (userId, shippingInfo) => {
   return async dispatch => {
     try {
-      const {data} = await axios.put(`/api/users/checkout/${userId}`, {
-        completed: true,
-        shippingInfo: address
-      })
-      dispatch(submitCart(data))
+
+      const {data} = await axios.put(
+        `/api/users/checkout/${userId}`,
+        shippingInfo
+      )
+      dispatch(checkoutCart(data))
+
     } catch (error) {
       console.log('Problem with submitting order', error)
     }
@@ -112,14 +116,17 @@ const cartReducer = (state = initialState, action) => {
       return {...state, products: [...action.cart]}
     case ADD_PRODUCT:
       return {...state, products: [...state.products, action.product]}
+
     case SUBMIT_CART:
       return {...state, products: []}
     case INCREMENT:
       return {...state, ...action.quantityObj}
     case DECREMENT:
       return {...state, ...action.quantityObj}
+    case CHECKOUT_CART:
+      return initialState
     default:
-      return state
+      return {...state}
   }
 }
 
