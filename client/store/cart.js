@@ -1,4 +1,5 @@
 import axios from 'axios'
+import user from './user'
 
 const GET_CART = 'GET_CART'
 const ADD_PRODUCT = 'ADD_PRODUCT'
@@ -7,7 +8,7 @@ const SUBMIT_CART = 'SUBMIT_CART'
 const INCREMENT = 'INCREMENT'
 const DECREMENT = 'DECREMENT'
 const CHECKOUT_CART = 'SUBMIT_CART'
-
+const REMOVE_ITEM = 'REMOVE_ITEM'
 
 const getCart = cart => ({
   type: GET_CART,
@@ -51,13 +52,11 @@ const checkoutCart = cart => ({
 export const checkoutCartThunk = (userId, shippingInfo) => {
   return async dispatch => {
     try {
-
       const {data} = await axios.put(
         `/api/users/checkout/${userId}`,
         shippingInfo
       )
       dispatch(checkoutCart(data))
-
     } catch (error) {
       console.log('Problem with submitting order', error)
     }
@@ -101,7 +100,23 @@ export const decrementThunk = (productId, orderId) => {
       }
       dispatch(decrement(quantityObj))
     } catch (e) {
-      next(e)
+      console.error(e)
+    }
+  }
+}
+
+const removedItem = productId => ({
+  type: REMOVE_ITEM,
+  productId
+})
+
+export const removeItem = (product, userId) => {
+  return async dispatch => {
+    try {
+      await axios.delete(`/api/users/${userId}/cart/${product.id}`)
+      dispatch(removedItem(product.id))
+    } catch (e) {
+      console.error(e)
     }
   }
 }
@@ -116,7 +131,6 @@ const cartReducer = (state = initialState, action) => {
       return {...state, products: [...action.cart]}
     case ADD_PRODUCT:
       return {...state, products: [...state.products, action.product]}
-
     case SUBMIT_CART:
       return {...state, products: []}
     case INCREMENT:
@@ -125,6 +139,10 @@ const cartReducer = (state = initialState, action) => {
       return {...state, ...action.quantityObj}
     case CHECKOUT_CART:
       return initialState
+    case REMOVE_ITEM: {
+      let newProds = state.products.filter(prod => prod.id !== action.productId)
+      return {...state, products: newProds}
+    }
     default:
       return {...state}
   }

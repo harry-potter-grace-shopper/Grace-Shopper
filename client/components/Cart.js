@@ -2,7 +2,12 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
-import {getCartThunk, incrementThunk, decrementThunk} from '../store/cart'
+import {
+  getCartThunk,
+  incrementThunk,
+  decrementThunk,
+  removeItem
+} from '../store/cart'
 
 class Cart extends React.Component {
   componentDidMount() {
@@ -68,7 +73,15 @@ class Cart extends React.Component {
                   >
                     Decrease Qty
                   </button>
-                  <button type="button">Remove Item</button>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      await this.props.removeItem(product, this.props.user.id)
+                      //this.props.getCart(this.props.user.id)
+                    }}
+                  >
+                    Remove Item
+                  </button>
                   <p>Price: ${product.price}.00</p>
                 </div>
               </div>
@@ -98,6 +111,9 @@ const mapDispatchToProps = dispatch => ({
   },
   decrementThunk: (productId, orderId) => {
     dispatch(decrementThunk(productId, orderId))
+  },
+  removeItem: (product, userId) => {
+    dispatch(removeItem(product, userId))
   }
 })
 
