@@ -67,19 +67,22 @@ router.put('/:userId/cart', currentUserOnly, async (req, res, next) => {
 })
 
 ////removing product from the cart
-router.delete('/:userId/cart', currentUserOnly, async (req, res, next) => {
-  try {
-    console.log(req.body.id)
-    const removedProduct = await Product.findByPk(req.body.id)
-    const currentOrder = await Order.findOne({
-      where: {userId: req.params.userId, completed: false}
-    })
-    await currentOrder.removeProduct(removedProduct)
-    res.sendStatus(204)
-  } catch (error) {
-    next(error)
+router.delete(
+  '/:userId/cart/:prodId',
+  currentUserOnly,
+  async (req, res, next) => {
+    try {
+      const removedProduct = await Product.findByPk(req.params.prodId)
+      const currentOrder = await Order.findOne({
+        where: {userId: req.params.userId, completed: false}
+      })
+      await currentOrder.removeProduct(removedProduct)
+      res.sendStatus(204)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 router.put('/checkout/:userId/', currentUserOnly, async (req, res, next) => {
   try {

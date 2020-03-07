@@ -74,9 +74,9 @@ class Cart extends React.Component {
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
-                      this.props.removeItem(product, this.props.user.id)
-                      this.props.history.push('/users')
+                    onClick={async () => {
+                      await this.props.removeItem(product, this.props.user.id)
+                      //this.props.getCart(this.props.user.id)
                     }}
                   >
                     Remove Item

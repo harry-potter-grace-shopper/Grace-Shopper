@@ -100,7 +100,7 @@ export const decrementThunk = (productId, orderId) => {
       }
       dispatch(decrement(quantityObj))
     } catch (e) {
-      next(e)
+      console.error(e)
     }
   }
 }
@@ -113,11 +113,10 @@ const removedItem = productId => ({
 export const removeItem = (product, userId) => {
   return async dispatch => {
     try {
-      console.log(product.id, userId, 1)
-      await axios.delete(`/api/users/${userId}/cart`)
+      await axios.delete(`/api/users/${userId}/cart/${product.id}`)
       dispatch(removedItem(product.id))
     } catch (e) {
-      next(e)
+      console.error(e)
     }
   }
 }
@@ -132,7 +131,6 @@ const cartReducer = (state = initialState, action) => {
       return {...state, products: [...action.cart]}
     case ADD_PRODUCT:
       return {...state, products: [...state.products, action.product]}
-
     case SUBMIT_CART:
       return {...state, products: []}
     case INCREMENT:
@@ -141,6 +139,10 @@ const cartReducer = (state = initialState, action) => {
       return {...state, ...action.quantityObj}
     case CHECKOUT_CART:
       return initialState
+    case REMOVE_ITEM: {
+      let newProds = state.products.filter(prod => prod.id !== action.productId)
+      return {...state, products: newProds}
+    }
     default:
       return {...state}
   }
