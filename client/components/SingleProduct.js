@@ -4,6 +4,7 @@ import {setProductThunk} from '../store/singleProduct'
 import {addProductThunk} from '../store/cart'
 import UpdateProduct from './UpdateProduct'
 import {removeProductThunk} from '../store/products'
+import {addToGuestCartThunk} from '../store/guestCart'
 
 class SingleProduct extends React.Component {
   componentDidMount() {
@@ -22,7 +23,17 @@ class SingleProduct extends React.Component {
             <h2>{product.name}</h2>
             <p>{product.description}</p>
             <h3>${product.price}.00</h3>
-            {user.admin ? (
+            {user.id && !user.admin ? (
+              <button
+                type="submit"
+                onClick={() => this.props.addProduct(product.id, user.id)}
+              >
+                Add To Cart
+              </button>
+            ) : (
+              <span />
+            )}
+            {user.id && user.admin ? (
               <button
                 type="submit"
                 onClick={() => {
@@ -30,15 +41,21 @@ class SingleProduct extends React.Component {
                   this.props.history.push('/products')
                 }}
               >
+                {' '}
                 REMOVE PRODUCT
               </button>
             ) : (
+              <span />
+            )}
+            {!user.id ? (
               <button
                 type="submit"
-                onClick={() => this.props.addProduct(product.id, user.id)}
+                onClick={() => this.props.addToGuestCart(product)}
               >
-                Add To Cart
+                Add to Cart
               </button>
+            ) : (
+              <span />
             )}
           </div>
         </div>
@@ -51,7 +68,8 @@ const mapDispatchToProps = dispatch => ({
   setProduct: id => dispatch(setProductThunk(id)),
   addProduct: (productId, userId) =>
     dispatch(addProductThunk(productId, userId)),
-  remove: productId => dispatch(removeProductThunk(productId))
+  remove: productId => dispatch(removeProductThunk(productId)),
+  addToGuestCart: product => dispatch(addToGuestCartThunk(product))
 })
 
 const mapStateToProps = state => ({
