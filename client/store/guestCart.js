@@ -2,6 +2,8 @@ const GET_GUEST_CART = 'GET_GUEST_CART'
 const GUEST_CHECKOUT = 'CHECKOUT'
 const ADD_TO_GUEST_CART = 'ADD_TO_GUEST_CART'
 const REMOVE = 'REMOVE'
+const INCREASE = 'INCREASE'
+const DECREASE = 'DECREASE'
 
 const getGuestCart = products => ({
   type: GET_GUEST_CART,
@@ -29,20 +31,8 @@ export const addToGuestCartThunk = product => {
     try {
       let cart = await JSON.parse(localStorage.getItem('shoppingCart'))
       if (cart) {
-        cart.forEach(item => {
-          if (item.id === product.id) {
-            item.quantity = item.quantity + 1
-          } else {
-            cart.push({...product, quantity: 1})
-          }
-        })
-        // for (let i = 0; i < cart.length; i++) {
-        //     if(cart[i].id !== product.id) {
-        //         cart.push({...product, quantity: 1})
-        //     } else {
-        //         cart[i].quantity++
-        //     }
-        // }
+        const idArr = [...cart].map(item => item.id)
+        if (!idArr.includes(product.id)) cart.push({...product, quantity: 1})
       } else {
         cart = []
         cart.push({...product, quantity: 1})
@@ -51,6 +41,50 @@ export const addToGuestCartThunk = product => {
       dispatch(addToGuestCart(cart))
     } catch (error) {
       console.log('Error with adding to the cart', error)
+    }
+  }
+}
+
+const increaseQty = newCart => ({
+  type: INCREASE,
+  newCart
+})
+
+export const increaseQtyThunk = prodId => {
+  return async dispatch => {
+    try {
+      const cart = await JSON.parse(localStorage.getItem('shoppingCart'))
+      cart.filter(item => {
+        if (item.id === prodId) return (item.quantity = item.quantity + 1)
+      })
+      localStorage.setItem('shoppingCart', JSON.stringify(cart))
+      dispatch(increaseQty(cart))
+    } catch (error) {
+      console.log('Error with + Qty', error)
+    }
+  }
+}
+
+const decreaseQty = newCart => ({
+  type: DECREASE,
+  newCart
+})
+
+export const decreaseQtyThunk = prodId => {
+  return async dispatch => {
+    try {
+      const cart = await JSON.parse(localStorage.getItem('shoppingCart'))
+      cart.filter(item => {
+        if (item.id === prodId) {
+          if (item.quantity !== 1) {
+            return (item.quantity = item.quantity - 1)
+          }
+        }
+      })
+      localStorage.setItem('shoppingCart', JSON.stringify(cart))
+      dispatch(decreaseQty(cart))
+    } catch (error) {
+      console.log('Error with - Qty', error)
     }
   }
 }
@@ -104,6 +138,10 @@ const guestCartReducer = (state = initialState, action) => {
     case GUEST_CHECKOUT:
       return state
     case REMOVE:
+      return {...state, cart: action.newCart}
+    case INCREASE:
+      return {...state, cart: action.newCart}
+    case DECREASE:
       return {...state, cart: action.newCart}
     default:
       return state

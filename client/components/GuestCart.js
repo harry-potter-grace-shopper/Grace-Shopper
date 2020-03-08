@@ -2,7 +2,9 @@ import React from 'react'
 import {
   getGuestCartThunk,
   guestCheckoutThunk,
-  removeFromGuestCartThunk
+  removeFromGuestCartThunk,
+  increaseQtyThunk,
+  decreaseQtyThunk
 } from '../store/guestCart'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
@@ -22,7 +24,10 @@ class GuestCart extends React.Component {
         </div>
       )
     } else {
-      const tots = products.cart.reduce((acc, val) => acc + val.price, 0)
+      const tots = products.cart.reduce(
+        (acc, val) => acc + val.price * val.quantity,
+        0
+      )
       return (
         <div className="cart-page">
           <h1>My Cart</h1>
@@ -30,13 +35,25 @@ class GuestCart extends React.Component {
             {products.cart.map((product, j) => (
               <div className="cart-item" key={j}>
                 <div className="cart-image">
-                  <img src={product.imageUrl} />
+                  <Link to={`/products/${product.id}`}>
+                    <img src={product.imageUrl} />
+                  </Link>
                 </div>
                 <div className="cart-details">
                   <h3>{product.name}</h3>
                   <p>Quantity:{product.quantity}</p>
-                  <button type="button">Increase Qty</button>
-                  <button type="button">Decrease Qty</button>
+                  <button
+                    type="button"
+                    onClick={() => this.props.increase(product.id)}
+                  >
+                    Increase Qty
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => this.props.decrease(product.id)}
+                  >
+                    Decrease Qty
+                  </button>
                   <button
                     type="button"
                     onClick={() => this.props.remove(product.id)}
@@ -64,7 +81,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getGuestCart: () => dispatch(getGuestCartThunk()),
-  remove: id => dispatch(removeFromGuestCartThunk(id))
+  remove: id => dispatch(removeFromGuestCartThunk(id)),
+  increase: id => dispatch(increaseQtyThunk(id)),
+  decrease: id => dispatch(decreaseQtyThunk(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuestCart)

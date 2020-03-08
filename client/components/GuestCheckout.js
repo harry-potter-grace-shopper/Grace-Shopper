@@ -31,7 +31,10 @@ class GuestCheckout extends React.Component {
 
   render() {
     const {products} = this.props
-    const tots = products.cart.reduce((acc, val) => acc + val.price, 0)
+    const tots = products.cart.reduce(
+      (acc, val) => acc + val.price * val.quantity,
+      0
+    )
     return (
       <div className="checkout-page">
         <h1>Checkout</h1>
