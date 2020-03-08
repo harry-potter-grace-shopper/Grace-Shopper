@@ -10,6 +10,8 @@ import AllUsers from './components/AllUsers'
 import Cart from './components/Cart'
 import Checkout from './components/Checkout'
 import OrderConfirmation from './components/OrderConfirmation'
+import GuestCart from './components/GuestCart'
+import GuestCheckout from './components/GuestCheckout'
 
 /**
  * COMPONENT
@@ -31,16 +33,15 @@ class Routes extends Component {
         <Route path="/products/:id" component={SingleProduct} />
         <Route exact path="/" component={AllProducts} />
         <Route exact path="/home" component={AllProducts} />
-        <Route exact path="/:userid/cart/checkout" component={Checkout} />
-        <Route
-          path="/:userid/cart/checkout/confirm"
-          component={OrderConfirmation}
-        />
+        <Route exact path="/guest/cart" component={GuestCart} />
+        <Route exact path="/guest/cart/checkout" component={GuestCheckout} />
+        <Route path="/confirm" component={OrderConfirmation} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
             <Route path="/:userid/cart" component={Cart} />
+            <Route exact path="/:userid/cart/checkout" component={Checkout} />
             {user.admin ? (
               <Route exact path="/users" component={AllUsers} />
             ) : (
