@@ -33,7 +33,6 @@ class Cart extends React.Component {
 
   render() {
     const products = this.props.products
-    console.log(products)
     if (products.length === 0)
       return (
         <div className="cart-page">
@@ -42,7 +41,10 @@ class Cart extends React.Component {
         </div>
       )
     else {
-      const tots = products.reduce((acc, val) => acc + val.price, 0)
+      const tots = products.reduce(function total(acc, val) {
+        const quantity = val.orders[0].order_history.quantity
+        return acc + val.price * quantity
+      }, 0)
       return (
         <div className="cart-page">
           <h1>My Cart</h1>
@@ -79,7 +81,6 @@ class Cart extends React.Component {
                     type="button"
                     onClick={async () => {
                       await this.props.removeItem(product, this.props.user.id)
-                      //this.props.getCart(this.props.user.id)
                     }}
                   >
                     Remove Item
