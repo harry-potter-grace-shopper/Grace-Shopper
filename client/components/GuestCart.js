@@ -60,7 +60,7 @@ class GuestCart extends React.Component {
                   >
                     Remove Item
                   </button>
-                  <p>Price: ${product.price}.00</p>
+                  <p>Unit Price: ${product.price}.00</p>
                 </div>
               </div>
             ))}

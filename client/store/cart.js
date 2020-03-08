@@ -3,8 +3,6 @@ import user from './user'
 
 const GET_CART = 'GET_CART'
 const ADD_PRODUCT = 'ADD_PRODUCT'
-
-const SUBMIT_CART = 'SUBMIT_CART'
 const INCREMENT = 'INCREMENT'
 const DECREMENT = 'DECREMENT'
 const CHECKOUT_CART = 'SUBMIT_CART'
@@ -131,8 +129,6 @@ const cartReducer = (state = initialState, action) => {
       return {...state, products: [...action.cart]}
     case ADD_PRODUCT:
       return {...state, products: [...state.products, action.product]}
-    case SUBMIT_CART:
-      return {...state, products: []}
     case INCREMENT:
       return {...state, ...action.quantityObj}
     case DECREMENT:

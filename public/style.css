@@ -1,5 +1,6 @@
 body {
   font-family: 'Josefin Sans', sans-serif;
+  color: black;
 }
 
 a {
@@ -141,6 +142,10 @@ nav a {
 .cart-details {
   margin-left: 3rem;
   padding: 1rem;
+}
+
+.cart-quantity {
+  display: flex;
 }
 
 /* CHECKOUT PAGE STYLING */
