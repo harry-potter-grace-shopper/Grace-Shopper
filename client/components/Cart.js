@@ -18,17 +18,16 @@ class Cart extends React.Component {
   handleClick(event, product) {
     const orderId = product.orders[0].id
     const action = event.target.value
-    console.log(action)
     event.preventDefault()
     if (action === 'increment') {
       this.props.incrementThunk(product.id, orderId)
     }
-    if (action === 'decrement') {
+    if (
+      action === 'decrement' &&
+      product.orders[0].order_history.quantity > 1
+    ) {
       this.props.decrementThunk(product.id, orderId)
     }
-    const userId = this.props.user.id
-    const {getCart} = this.props
-    getCart(userId)
   }
 
   render() {
