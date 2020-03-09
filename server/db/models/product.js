@@ -31,6 +31,20 @@ const Product = db.define('product', {
   },
   inventory: {
     type: Sequelize.INTEGER
+  },
+  color: {
+    type: Sequelize.ENUM(
+      'Black',
+      'Blue',
+      'White',
+      'Red',
+      'Orange',
+      'Yellow',
+      'Pink',
+      'Green',
+      'Purple',
+      'Silver'
+    )
   }
 })
 
