@@ -18,15 +18,16 @@ class Cart extends React.Component {
   handleClick(event, product) {
     const orderId = product.orders[0].id
     const action = event.target.value
+    const userId = this.props.user.id
     event.preventDefault()
     if (action === 'increment') {
-      this.props.incrementThunk(product.id, orderId)
+      this.props.incrementThunk(product.id, orderId, userId)
     }
     if (
       action === 'decrement' &&
       product.orders[0].order_history.quantity > 1
     ) {
-      this.props.decrementThunk(product.id, orderId)
+      this.props.decrementThunk(product.id, orderId, userId)
     }
   }
 
@@ -108,11 +109,11 @@ const mapDispatchToProps = dispatch => ({
   getCart: userId => {
     dispatch(getCartThunk(userId))
   },
-  incrementThunk: (productId, orderId) => {
-    dispatch(incrementThunk(productId, orderId))
+  incrementThunk: (productId, orderId, userId) => {
+    dispatch(incrementThunk(productId, orderId, userId))
   },
-  decrementThunk: (productId, orderId) => {
-    dispatch(decrementThunk(productId, orderId))
+  decrementThunk: (productId, orderId, userId) => {
+    dispatch(decrementThunk(productId, orderId, userId))
   },
   removeItem: (product, userId) => {
     dispatch(removeItem(product, userId))

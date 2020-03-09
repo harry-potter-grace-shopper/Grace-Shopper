@@ -66,10 +66,10 @@ const increment = prodId => ({
   prodId
 })
 
-export const incrementThunk = (productId, orderId) => {
+export const incrementThunk = (productId, orderId, userId) => {
   return async dispatch => {
     try {
-      await axios.put(`/api/quantity/${productId}/${orderId}/add`)
+      await axios.put(`/api/users/${userId}/cart/add`, {productId, orderId})
       dispatch(increment(productId))
     } catch (e) {
       console.log('problem with the increment thunk', e)
@@ -82,10 +82,10 @@ const decrement = prodId => ({
   prodId
 })
 
-export const decrementThunk = (productId, orderId) => {
+export const decrementThunk = (productId, orderId, userId) => {
   return async dispatch => {
     try {
-      await axios.put(`/api/quantity/${productId}/${orderId}/remove`)
+      await axios.put(`/api/users/${userId}/cart/remove`, {productId, orderId})
       dispatch(decrement(productId))
     } catch (e) {
       console.error(e)
