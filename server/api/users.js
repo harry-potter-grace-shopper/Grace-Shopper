@@ -128,7 +128,8 @@ router.get('/:userId/cart', currentUserOnly, async (req, res, next) => {
 
 router.get(
   '/:userId/ordersHistory',
-  /* currentUserOnly,*/ async (req, res, next) => {
+  currentUserOnly,
+  async (req, res, next) => {
     try {
       const oldOrders = await Order.findAll({
         where: {userId: req.params.userId, completed: true},
