@@ -41,7 +41,7 @@ class GuestCart extends React.Component {
                 </div>
                 <div className="cart-details">
                   <h3>{product.name}</h3>
-                  <p>Quantity:{product.quantity}</p>
+                  <p>Quantity: {product.quantity}</p>
                   <button
                     type="button"
                     onClick={() => this.props.increase(product.id)}

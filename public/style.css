@@ -42,7 +42,7 @@ button:hover {
 /* NAV BAR STYLING */
 
 #nav-bar {
-  background: rgb(196, 95, 117);
+  /* background: rgb(196, 95, 117); */
   height: 5.5em;
   text-align: center;
 }
@@ -53,9 +53,11 @@ nav {
 
 nav a {
   display: inline-flex;
-  padding: 1em;
-  font-size: 20px;
-  color: white;
+  padding: 1.5em;
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  color: black;
+  text-transform: uppercase;
 }
 
 .nav-items {

@@ -51,8 +51,8 @@ class GuestCheckout extends React.Component {
 
                   <div className="cart-details">
                     <h3>{product.name}</h3>
-                    <p>Quantity:{product.quantity}</p>
-                    <p>Price: ${product.price}.00</p>
+                    <p>Quantity: {product.quantity}</p>
+                    <p>Unit Price: ${product.price}.00</p>
                   </div>
                 </div>
               ))}
