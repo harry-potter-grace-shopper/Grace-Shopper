@@ -5,7 +5,7 @@ const GET_CART = 'GET_CART'
 const ADD_PRODUCT = 'ADD_PRODUCT'
 const INCREMENT = 'INCREMENT'
 const DECREMENT = 'DECREMENT'
-const CHECKOUT_CART = 'SUBMIT_CART'
+const CHECKOUT_CART = 'CHECKOUT_CART'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 
 const getCart = cart => ({
@@ -119,8 +119,6 @@ const cartReducer = (state = initialState, action) => {
       return {...state, products: [...action.cart]}
     case ADD_PRODUCT:
       return {...state, products: [...state.products, action.product]}
-    case SUBMIT_CART:
-      return {...state, products: []}
     case INCREMENT: {
       const newProducts = state.products.map(function x(prod) {
         if (prod.id === action.prodId) {
