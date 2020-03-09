@@ -6,6 +6,7 @@ body {
 a {
   text-decoration: none;
   font-weight: bold;
+  color: black;
 }
 
 label {
@@ -42,19 +43,25 @@ button:hover {
 
 #nav-bar {
   background: rgb(196, 95, 117);
-  height: 5em;
+  height: 5.5em;
+  text-align: center;
+}
+
+nav {
+  text-align: center;
 }
 
 nav a {
-  display: inline-block;
-  margin: 1em;
+  display: inline-flex;
+  padding: 1em;
   font-size: 20px;
-  color: black;
+  color: white;
 }
 
 .nav-items {
   display: flex;
-  /* justify-content: space-between; */
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* ALL PRODUCTS PAGE STYLING */
@@ -75,13 +82,16 @@ nav a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 300px;
   width: 200px;
   padding: 2rem;
   margin: 2rem;
   -webkit-box-shadow: -3px 11px 32px 0px rgba(209, 209, 209, 1);
   -moz-box-shadow: -3px 11px 32px 0px rgba(209, 209, 209, 1);
   box-shadow: -3px 11px 32px 0px rgba(209, 209, 209, 1);
+}
+
+.single-product-card img {
+  height: 175px;
 }
 
 /* SINGLE PRODUCT PAGE STYLING */
@@ -170,6 +180,10 @@ nav a {
 .checkout-section {
   margin: 1rem;
   padding: 1rem;
+}
+
+.form-input {
+  margin-bottom: 1rem;
 }
 
 /* GENERIC PAGE STYLING */
