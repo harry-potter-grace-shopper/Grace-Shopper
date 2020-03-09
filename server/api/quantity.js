@@ -36,7 +36,6 @@ router.put('/:productId/:orderId/remove', async (req, res, next) => {
 })
 
 router.put('/:productId/:orderId/add', async (req, res, next) => {
-  console.log('this is in the add route', req.params)
   try {
     const {productId, orderId} = req.params
     const orderItem = await OrderHistory.findOne({
@@ -45,9 +44,7 @@ router.put('/:productId/:orderId/add', async (req, res, next) => {
         orderId: orderId
       }
     })
-    console.log(orderItem.quantity)
     await orderItem.increment('quantity')
-    console.log(orderItem.quantity)
     res.json(orderItem)
   } catch (e) {
     next(e)

@@ -61,42 +61,32 @@ export const checkoutCartThunk = (userId, shippingInfo) => {
   }
 }
 
-const increment = quantityObj => ({
+const increment = prodId => ({
   type: INCREMENT,
-  quantityObj
+  prodId
 })
 
 export const incrementThunk = (productId, orderId) => {
   return async dispatch => {
     try {
-      const {quantity} = await axios.put(
-        `/api/quantity/${productId}/${orderId}/add`
-      )
-      const quantityObj = {
-        [productId]: quantity
-      }
-      dispatch(increment(quantityObj))
+      await axios.put(`/api/quantity/${productId}/${orderId}/add`)
+      dispatch(increment(productId))
     } catch (e) {
       console.log('problem with the increment thunk', e)
     }
   }
 }
 
-const decrement = quantityObj => ({
+const decrement = prodId => ({
   type: DECREMENT,
-  quantityObj
+  prodId
 })
 
 export const decrementThunk = (productId, orderId) => {
   return async dispatch => {
     try {
-      const {quantity} = await axios.put(
-        `/api/quantity/${productId}/${orderId}/remove`
-      )
-      const quantityObj = {
-        [productId]: quantity
-      }
-      dispatch(decrement(quantityObj))
+      await axios.put(`/api/quantity/${productId}/${orderId}/remove`)
+      dispatch(decrement(productId))
     } catch (e) {
       console.error(e)
     }
@@ -129,10 +119,30 @@ const cartReducer = (state = initialState, action) => {
       return {...state, products: [...action.cart]}
     case ADD_PRODUCT:
       return {...state, products: [...state.products, action.product]}
-    case INCREMENT:
-      return {...state, ...action.quantityObj}
-    case DECREMENT:
-      return {...state, ...action.quantityObj}
+    case SUBMIT_CART:
+      return {...state, products: []}
+    case INCREMENT: {
+      const newProducts = state.products.map(function x(prod) {
+        if (prod.id === action.prodId) {
+          prod.orders[0].order_history.quantity++
+          return prod
+        } else {
+          return prod
+        }
+      })
+      return {...state, products: newProducts}
+    }
+    case DECREMENT: {
+      const newProducts = state.products.map(function x(prod) {
+        if (prod.id === action.prodId) {
+          prod.orders[0].order_history.quantity--
+          return prod
+        } else {
+          return prod
+        }
+      })
+      return {...state, products: newProducts}
+    }
     case CHECKOUT_CART:
       return initialState
     case REMOVE_ITEM: {
