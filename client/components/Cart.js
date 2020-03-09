@@ -18,16 +18,25 @@ class Cart extends React.Component {
   handleClick(event, product) {
     const orderId = product.orders[0].id
     const action = event.target.value
+    const userId = this.props.user.id
     event.preventDefault()
     if (action === 'increment') {
-      this.props.incrementThunk(product.id, orderId)
+      this.props.incrementThunk(product.id, orderId, userId)
     }
     if (
       action === 'decrement' &&
       product.orders[0].order_history.quantity > 1
     ) {
-      this.props.decrementThunk(product.id, orderId)
+      this.props.decrementThunk(product.id, orderId, userId)
     }
+  }
+
+  getTots() {
+    const tots = this.props.products.reduce(function total(acc, val) {
+      const quantity = val.orders[0].order_history.quantity
+      return acc + val.price * quantity
+    }, 0)
+    return tots
   }
 
   render() {
@@ -40,10 +49,6 @@ class Cart extends React.Component {
         </div>
       )
     else {
-      const tots = products.reduce(function total(acc, val) {
-        const quantity = val.orders[0].order_history.quantity
-        return acc + val.price * quantity
-      }, 0)
       return (
         <div className="cart-page">
           <h1>My Cart</h1>
@@ -89,7 +94,7 @@ class Cart extends React.Component {
               </div>
             ))}
           </div>
-          <h2>Total: ${tots}.00</h2>
+          <h2>Total: ${this.getTots()}.00</h2>
           <Link to={`/${this.props.user.id}/cart/checkout`}>
             <button type="submit">Checkout</button>
           </Link>
@@ -108,11 +113,11 @@ const mapDispatchToProps = dispatch => ({
   getCart: userId => {
     dispatch(getCartThunk(userId))
   },
-  incrementThunk: (productId, orderId) => {
-    dispatch(incrementThunk(productId, orderId))
+  incrementThunk: (productId, orderId, userId) => {
+    dispatch(incrementThunk(productId, orderId, userId))
   },
-  decrementThunk: (productId, orderId) => {
-    dispatch(decrementThunk(productId, orderId))
+  decrementThunk: (productId, orderId, userId) => {
+    dispatch(decrementThunk(productId, orderId, userId))
   },
   removeItem: (product, userId) => {
     dispatch(removeItem(product, userId))

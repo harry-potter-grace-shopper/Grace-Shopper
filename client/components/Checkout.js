@@ -53,6 +53,14 @@ class Checkout extends React.Component {
     }
   }
 
+  getTots() {
+    const tots = this.props.products.reduce(function total(acc, val) {
+      const quantity = val.orders[0].order_history.quantity
+      return acc + val.price * quantity
+    }, 0)
+    return tots
+  }
+
   validateForm() {
     let fields = this.state.fields
     let errors = {}
@@ -94,10 +102,6 @@ class Checkout extends React.Component {
   render() {
     const products = this.props.products
 
-    const tots = products.reduce(function tots(acc, val) {
-      const quantity = val.orders[0].order_history.quantity
-      return acc + val.price * quantity
-    }, 0)
     return (
       <div className="checkout-page">
         <h1>Checkout</h1>
@@ -121,7 +125,7 @@ class Checkout extends React.Component {
               ))}
             </div>
             <div>
-              <h2>Order Total: ${tots}.00</h2>
+              <h2>Order Total: ${this.getTots()}.00</h2>
             </div>
           </div>
         </div>

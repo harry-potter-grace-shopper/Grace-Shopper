@@ -11,6 +11,10 @@ router.param('id', async (req, res, next) => {
     if (product) {
       req.product = product
       next()
+    } else {
+      const error = new Error('Cannot find product')
+      error.status = 404
+      next(error)
     }
   } catch (err) {
     next(err)
@@ -27,31 +31,21 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {
-  try {
-    if (req.product) {
-      res.json(req.product)
-    } else {
-      const error = new Error('This product is not defined')
-      error.status = 404
-      next(error)
-    }
-  } catch (error) {
-    next(error)
-  }
+  res.json(req.product)
 })
 
 router.post('/', adminsOnly, async (req, res, next) => {
   try {
-    const newProductDetails = {
-      name: req.body.name,
-      description: req.body.description,
-      price: req.body.price,
-      imageUrl: req.body.imageUrl
+    let {name, description, price, imageUrl} = req.body
+    if (imageUrl === '') {
+      imageUrl = undefined
     }
-    if (newProductDetails.imageUrl === '') {
-      delete newProductDetails.imageUrl
-    }
-    const newProduct = await Product.create(newProductDetails)
+    const newProduct = await Product.create({
+      name,
+      description,
+      price,
+      imageUrl
+    })
     if (newProduct) {
       res.status(201).json(newProduct)
     } else {

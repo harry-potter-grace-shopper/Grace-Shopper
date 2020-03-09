@@ -13,6 +13,14 @@ class GuestCart extends React.Component {
     this.props.getGuestCart()
   }
 
+  getTots() {
+    const tots = this.props.products.cart.reduce(
+      (acc, val) => acc + val.price * val.quantity,
+      0
+    )
+    return tots
+  }
+
   render() {
     const {products} = this.props
     if (products.cart === 0) {
@@ -23,10 +31,6 @@ class GuestCart extends React.Component {
         </div>
       )
     } else {
-      const tots = products.cart.reduce(
-        (acc, val) => acc + val.price * val.quantity,
-        0
-      )
       return (
         <div className="cart-page">
           <h1>My Cart</h1>
@@ -64,7 +68,7 @@ class GuestCart extends React.Component {
               </div>
             ))}
           </div>
-          <h2>Total: ${tots}.00</h2>
+          <h2>Total: ${this.getTots()}.00</h2>
           <Link to="/guest/cart/checkout">
             <button type="submit">Checkout</button>
           </Link>
