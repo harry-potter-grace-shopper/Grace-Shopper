@@ -1,5 +1,4 @@
 import axios from 'axios'
-import user from './user'
 
 const GET_CART = 'GET_CART'
 const ADD_PRODUCT = 'ADD_PRODUCT'

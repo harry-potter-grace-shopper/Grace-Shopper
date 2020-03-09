@@ -113,6 +113,38 @@ async function seed() {
   await user1.addOrders([order1, order2])
   await user2.addOrder(order3)
 
+  const orderHistory1 = await OrderHistory.findOne({
+    where: {
+      productId: prod1.id,
+      orderId: order1.id
+    }
+  })
+  await orderHistory1.update({currentPrice: prod1.price})
+
+  const orderHistory2 = await OrderHistory.findOne({
+    where: {
+      productId: prod2.id,
+      orderId: order1.id
+    }
+  })
+  await orderHistory2.update({currentPrice: prod2.price})
+
+  const orderHistory4 = await OrderHistory.findOne({
+    where: {
+      productId: prod1.id,
+      orderId: order2.id
+    }
+  })
+  await orderHistory4.update({currentPrice: prod1.price})
+
+  const orderHistory3 = await OrderHistory.findOne({
+    where: {
+      productId: prod3.id,
+      orderId: order3.id
+    }
+  })
+  await orderHistory3.update({currentPrice: prod3.price})
+
   console.log(`seeded successfully`)
 }
 

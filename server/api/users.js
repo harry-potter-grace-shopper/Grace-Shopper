@@ -133,6 +133,22 @@ router.get('/:userId/cart', currentUserOnly, async (req, res, next) => {
   }
 })
 
+router.get(
+  '/:userId/ordersHistory',
+  currentUserOnly,
+  async (req, res, next) => {
+    try {
+      const oldOrders = await Order.findAll({
+        where: {userId: req.params.userId, completed: true},
+        include: {model: Product}
+      })
+      res.json(oldOrders)
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
 /*
 navigating the cartItems array :
 product id = cartItem.id,

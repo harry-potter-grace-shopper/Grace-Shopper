@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   getGuestCartThunk,
-  guestCheckoutThunk,
   removeFromGuestCartThunk,
   increaseQtyThunk,
   decreaseQtyThunk
@@ -10,7 +9,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
 class GuestCart extends React.Component {
-  async componentDidMount() {
+  componentDidMount() {
     this.props.getGuestCart()
   }
 
