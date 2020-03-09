@@ -7,7 +7,12 @@ const OrderHistory = db.define('order_history', {
     defaultValue: 1
   },
   currentPrice: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    defaultValue: 1
+  },
+  date: {
+    type: Sequelize.DATEONLY,
+    defaultValue: new Date()
   }
 })
 
