@@ -1,26 +1,25 @@
 import React from 'react'
 import {SingleProductCard} from './SingleProductCard'
 import {connect} from 'react-redux'
-import {getProductsThunk} from '../store/products'
+import {getInStockProductsThunk} from '../store/instock'
 import CreateProduct from './CreateProduct'
 import {Link} from 'react-router-dom'
 
 class AllProducts extends React.Component {
   componentDidMount() {
-    this.props.getProducts()
+    this.props.getInStockProductsThunk()
   }
 
   render() {
-    const {products, user} = this.props
+    const {inStockProducts, user} = this.props
     return (
       <div>
         <div>
-          <p>Click for Categories:</p>
-          <Link to="/instock">In Stock Items</Link>
+          <Link to="/instock">Back to All Products</Link>
         </div>
         {user.admin ? <CreateProduct /> : <div />}
-        <div className="all-products-page">
-          {products.map(product => {
+        <div className="in-stock-products-page">
+          {inStockProducts.map(product => {
             return (
               <SingleProductCard
                 key={product.id}
@@ -38,11 +37,11 @@ class AllProducts extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  getProducts: () => dispatch(getProductsThunk())
+  getInStockProductsThunk: () => dispatch(getInStockProductsThunk())
 })
 
 const mapStateToProps = state => ({
-  products: state.products,
+  inStockProducts: state.inStockProducts,
   user: state.user
 })
 
