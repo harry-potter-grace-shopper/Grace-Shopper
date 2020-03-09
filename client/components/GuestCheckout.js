@@ -6,27 +6,79 @@ class GuestCheckout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      address: ''
+      fields: {},
+      errors: {}
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   async componentDidMount() {
-    this.props.getGuestCart()
+    await this.props.getGuestCart()
   }
 
   handleChange = event => {
+    let fields = this.state.fields
+    fields[event.target.name] = event.target.value
     this.setState({
-      [event.target.name]: event.target.value
+      fields
     })
   }
 
   handleSubmit = event => {
-    this.props.checkout()
-    this.props.history.push('/confirm')
+    event.preventDefault()
+    if (this.validateForm()) {
+      let fields = {}
+      fields.firstName = ''
+      fields.lastName = ''
+      fields.email = ''
+      fields.address = ''
+      this.setState({fields: fields})
+      this.props.checkout()
+      this.props.history.push('/confirm')
+    }
+  }
+
+  validateForm() {
+    let fields = this.state.fields
+    let errors = {}
+    let formIsValid = true
+
+    if (!fields.firstName) {
+      formIsValid = false
+      errors.firstName = 'First name is required'
+    }
+
+    if (!fields.lastName) {
+      formIsValid = false
+      errors.lastName = 'Last name is required'
+    }
+
+    if (!fields.email) {
+      formIsValid = false
+      errors.email = 'Email is required'
+    }
+
+    if (typeof fields.email !== 'undefined') {
+      //regular expression for email validation
+      var pattern = new RegExp(
+        /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+      )
+      if (!pattern.test(fields.email)) {
+        formIsValid = false
+        errors.email = 'Please enter a valid email address'
+      }
+    }
+
+    if (!fields.address) {
+      formIsValid = false
+      errors.address = 'Address is required'
+    }
+
+    this.setState({
+      errors: errors
+    })
+
+    return formIsValid
   }
 
   render() {
@@ -74,6 +126,7 @@ class GuestCheckout extends React.Component {
                 onChange={this.handleChange}
                 className="form-input"
               />
+              <div>{this.state.errors.firstName}</div>
               <label>Last Name:</label>
               <input
                 name="lastName"
@@ -82,6 +135,8 @@ class GuestCheckout extends React.Component {
                 onChange={this.handleChange}
                 className="form-input"
               />
+              <div>{this.state.errors.lastName}</div>
+
               <label>Email:</label>
               <input
                 name="email"
@@ -90,6 +145,7 @@ class GuestCheckout extends React.Component {
                 onChange={this.handleChange}
                 className="form-input"
               />
+              <div>{this.state.errors.email}</div>
               <label>Shipping Address:</label>
               <input
                 name="address"
@@ -98,6 +154,7 @@ class GuestCheckout extends React.Component {
                 onChange={this.handleChange}
                 className="form-input"
               />
+              <div>{this.state.errors.address}</div>
             </form>
           </div>
 

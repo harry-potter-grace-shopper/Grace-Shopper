@@ -186,6 +186,8 @@ nav a {
 
 .form-input {
   margin-bottom: 1rem;
+  width: 50%;
+  border: solid 1px #bdc7d8;
 }
 
 /* GENERIC PAGE STYLING */
