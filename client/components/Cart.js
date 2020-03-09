@@ -31,6 +31,14 @@ class Cart extends React.Component {
     }
   }
 
+  getTots() {
+    const tots = this.props.products.reduce(function total(acc, val) {
+      const quantity = val.orders[0].order_history.quantity
+      return acc + val.price * quantity
+    }, 0)
+    return tots
+  }
+
   render() {
     const products = this.props.products
     if (products.length === 0)
@@ -41,10 +49,6 @@ class Cart extends React.Component {
         </div>
       )
     else {
-      const tots = products.reduce(function total(acc, val) {
-        const quantity = val.orders[0].order_history.quantity
-        return acc + val.price * quantity
-      }, 0)
       return (
         <div className="cart-page">
           <h1>My Cart</h1>
@@ -90,7 +94,7 @@ class Cart extends React.Component {
               </div>
             ))}
           </div>
-          <h2>Total: ${tots}.00</h2>
+          <h2>Total: ${this.getTots()}.00</h2>
           <Link to={`/${this.props.user.id}/cart/checkout`}>
             <button type="submit">Checkout</button>
           </Link>
