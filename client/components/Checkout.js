@@ -87,6 +87,7 @@ class Checkout extends React.Component {
                 type="text"
                 value={this.state.firstName}
                 onChange={this.handleChange}
+                className="form-input"
               />
               <label>Last Name:</label>
               <input
@@ -94,6 +95,7 @@ class Checkout extends React.Component {
                 type="text"
                 value={this.state.lastName}
                 onChange={this.handleChange}
+                className="form-input"
               />
               <label>Email:</label>
               <input
@@ -101,6 +103,7 @@ class Checkout extends React.Component {
                 type="text"
                 value={this.state.email}
                 onChange={this.handleChange}
+                className="form-input"
               />
               <label>Shipping Address:</label>
               <input
@@ -108,6 +111,7 @@ class Checkout extends React.Component {
                 type="text"
                 value={this.state.address}
                 onChange={this.handleChange}
+                className="form-input"
               />
             </form>
           </div>

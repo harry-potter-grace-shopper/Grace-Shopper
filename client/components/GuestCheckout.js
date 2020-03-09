@@ -72,6 +72,7 @@ class GuestCheckout extends React.Component {
                 type="text"
                 value={this.state.firstName}
                 onChange={this.handleChange}
+                className="form-input"
               />
               <label>Last Name:</label>
               <input
@@ -79,6 +80,7 @@ class GuestCheckout extends React.Component {
                 type="text"
                 value={this.state.lastName}
                 onChange={this.handleChange}
+                className="form-input"
               />
               <label>Email:</label>
               <input
@@ -86,6 +88,7 @@ class GuestCheckout extends React.Component {
                 type="text"
                 value={this.state.email}
                 onChange={this.handleChange}
+                className="form-input"
               />
               <label>Shipping Address:</label>
               <input
@@ -93,6 +96,7 @@ class GuestCheckout extends React.Component {
                 type="text"
                 value={this.state.address}
                 onChange={this.handleChange}
+                className="form-input"
               />
             </form>
           </div>
