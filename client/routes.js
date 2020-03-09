@@ -12,6 +12,7 @@ import Checkout from './components/Checkout'
 import OrderConfirmation from './components/OrderConfirmation'
 import GuestCart from './components/GuestCart'
 import GuestCheckout from './components/GuestCheckout'
+import OrderHistory from './components/OrderHistory'
 
 /**
  * COMPONENT
@@ -45,9 +46,12 @@ class Routes extends Component {
             {user.admin ? (
               <Route exact path="/users" component={AllUsers} />
             ) : (
-              <div />
+              <Route
+                exact
+                path="/users/:userId/ordersHistory"
+                component={OrderHistory}
+              />
             )}
-            <Route exact path="/users" component={AllUsers} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
