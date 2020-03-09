@@ -46,7 +46,7 @@ class Checkout extends React.Component {
       this.setState({fields: fields})
 
       const shippingInfo = {
-        address: this.state.address
+        address: this.state.fields.address
       }
       this.props.checkoutCart(this.props.user.id, shippingInfo)
       this.props.history.push('/confirm')
