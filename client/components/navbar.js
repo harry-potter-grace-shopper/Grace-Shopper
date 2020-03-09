@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn, user}) => (
-  <div>
+  <div id="nav-bar">
     <nav>
       {isLoggedIn ? (
         <div className="nav-items">
@@ -15,7 +15,7 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
             <Link to="/home">
               <img
                 src="https://www.logolynx.com/images/logolynx/d4/d429675b3b80e9cae4ab2f1dc734926a.gif"
-                width="150px"
+                width="200px"
               />
             </Link>
           </div>
@@ -24,7 +24,7 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
             <Link to="/home">Home</Link>
             {!user.admin ? <Link to={`/${user.id}/cart`}>Cart</Link> : <span />}
             {user.admin ? <Link to="/users">Users</Link> : <span />}
-            <a href="#" onClick={handleClick}>
+            <a href="/home" onClick={handleClick}>
               Logout
             </a>
           </div>
@@ -35,16 +35,18 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
             <Link to="/home">
               <img
                 src="https://www.logolynx.com/images/logolynx/d4/d429675b3b80e9cae4ab2f1dc734926a.gif"
-                width="150px"
+                width="200px"
               />
             </Link>
           </div>
 
-          {/* The navbar will show these links before you log in */}
-          <Link to="/">Home</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/guest/cart">Cart</Link>
+          <div>
+            {/* The navbar will show these links before you log in */}
+            <Link to="/">Home</Link>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign Up</Link>
+            <Link to="/guest/cart">Cart</Link>
+          </div>
         </div>
       )}
     </nav>
