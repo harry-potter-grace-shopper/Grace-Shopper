@@ -38,6 +38,14 @@ class GuestCheckout extends React.Component {
     }
   }
 
+  getTots() {
+    const tots = this.props.products.cart.reduce(
+      (acc, val) => acc + val.price * val.quantity,
+      0
+    )
+    return tots
+  }
+
   validateForm() {
     let fields = this.state.fields
     let errors = {}
@@ -83,10 +91,7 @@ class GuestCheckout extends React.Component {
 
   render() {
     const {products} = this.props
-    const tots = products.cart.reduce(
-      (acc, val) => acc + val.price * val.quantity,
-      0
-    )
+
     return (
       <div className="checkout-page">
         <h1>Checkout</h1>
@@ -110,7 +115,7 @@ class GuestCheckout extends React.Component {
               ))}
             </div>
             <div>
-              <h2>Order Total: ${tots}.00</h2>
+              <h2>Order Total: ${this.getTots()}.00</h2>
             </div>
           </div>
         </div>

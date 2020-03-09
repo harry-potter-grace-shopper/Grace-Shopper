@@ -21,9 +21,7 @@ async function seed() {
     description:
       'New generation tamagotchi. Raise your My Tama, feed and care for it, send it on playdates. Color: Purple',
     imageUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/71b84TxN1BL._AC_SX679_.jpg',
-    color: 'Purple',
-    inventory: 0
+      'https://images-na.ssl-images-amazon.com/images/I/71b84TxN1BL._AC_SX679_.jpg'
   })
   const prod2 = await Product.create({
     name: 'White Magic',
@@ -31,9 +29,7 @@ async function seed() {
     description:
       'New generation tamagotchi. Raise your My Tama, feed and care for it, send it on playdates. Color: White',
     imageUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/716Nk-BMlTL._AC_SX569_.jpg',
-    color: 'White',
-    inventory: 5
+      'https://images-na.ssl-images-amazon.com/images/I/716Nk-BMlTL._AC_SX569_.jpg'
   })
   const prod3 = await Product.create({
     name: 'Green Magic',
@@ -41,9 +37,7 @@ async function seed() {
     description:
       'New generation tamagotchi. Raise your My Tama, feed and care for it, send it on playdates. Color: Green',
     imageUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/61vT7Txan5L._AC_SX679_.jpg',
-    color: 'Green',
-    inventory: 100
+      'https://images-na.ssl-images-amazon.com/images/I/61vT7Txan5L._AC_SX679_.jpg'
   })
 
   await Product.create({
@@ -52,9 +46,7 @@ async function seed() {
     description:
       'Ban Dai - Tamagotchi Gudetamatama Sitting ver.Tamagotchi & Cover Set. The instruction manual for this product is in Japanese. Instructions in English are not included',
     imageUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/61PyNKmgveL._AC_SL1500_.jpg',
-    color: 'Orange',
-    inventory: 1000
+      'https://images-na.ssl-images-amazon.com/images/I/61PyNKmgveL._AC_SL1500_.jpg'
   })
 
   await Product.create({
@@ -63,9 +55,7 @@ async function seed() {
     description:
       'Tamagotchi from meets (Meets Tamagotchi), pastel Meets ver. Purple appeared! Or born twins in addition to the m! X play in the Tamagotchi Meets, Tama pet ranks. I just Tamagotchi different ultra-unique every time (Now Tama) grow up. Variations ∞ (infinity) !? Allowed to go out to further grow the now-Tama "Tamagotchi meets app", you brag about the country of the user. Use battery: single 4x2 (sold separately)',
     imageUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/7181ooeU4lL._AC_SL1000_.jpg',
-    color: 'Purple',
-    inventory: 25
+      'https://images-na.ssl-images-amazon.com/images/I/7181ooeU4lL._AC_SL1000_.jpg'
   })
 
   await Product.create({
@@ -73,9 +63,7 @@ async function seed() {
     price: 80,
     description: 'This item is Brand new & factory sealed.',
     imageUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/91pVoAiJ%2BVL._AC_SL1500_.jpg',
-    color: 'Purple',
-    inventory: 60
+      'https://images-na.ssl-images-amazon.com/images/I/91pVoAiJ%2BVL._AC_SL1500_.jpg'
   })
 
   await Product.create({
@@ -84,9 +72,7 @@ async function seed() {
     description:
       ' A mobile character LCD toy of the new character "Watch Lynn", a big success in the program. Specially designed specification that can check todays lucky degree with Watch Lynns Lucky Check, which is also directed at animation, and can play conversation. I always attach with a belt and stay with me. Use battery: CR2032 ~ 1 (included)',
     imageUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/61Z%2Bx8Kus4L._AC_SL1000_.jpg',
-    color: 'Pink',
-    inventory: 150
+      'https://images-na.ssl-images-amazon.com/images/I/61Z%2Bx8Kus4L._AC_SL1000_.jpg'
   })
 
   await Product.create({
@@ -95,9 +81,7 @@ async function seed() {
     description:
       'Product introduction Reincarnation completely new Tamagotchi, which was equipped with a "Tatchitsu Shin feature" a new sense as a "Life Tools", appeared!',
     imageUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/71FKOH7KBkL._AC_SL1370_.jpg',
-    color: 'Purple',
-    inventory: 1234
+      'https://images-na.ssl-images-amazon.com/images/I/71FKOH7KBkL._AC_SL1370_.jpg'
   })
 
   await Product.create({
@@ -106,9 +90,7 @@ async function seed() {
     description:
       'A new generation of TAMAGOTCHI, gTAMAGOTCHI 4Uh. You can connect with others! TAMAGOTCHI 4U allows you to connect with other by using the touch function of the device. ',
     imageUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/71qgskHqfhL._AC_SL1389_.jpg',
-    color: 'White',
-    inventory: 9000
+      'https://images-na.ssl-images-amazon.com/images/I/71qgskHqfhL._AC_SL1389_.jpg'
   })
 
   const order1 = await Order.create({
@@ -130,6 +112,38 @@ async function seed() {
 
   await user1.addOrders([order1, order2])
   await user2.addOrder(order3)
+
+  const orderHistory1 = await OrderHistory.findOne({
+    where: {
+      productId: prod1.id,
+      orderId: order1.id
+    }
+  })
+  await orderHistory1.update({currentPrice: prod1.price})
+
+  const orderHistory2 = await OrderHistory.findOne({
+    where: {
+      productId: prod2.id,
+      orderId: order1.id
+    }
+  })
+  await orderHistory2.update({currentPrice: prod2.price})
+
+  const orderHistory4 = await OrderHistory.findOne({
+    where: {
+      productId: prod1.id,
+      orderId: order2.id
+    }
+  })
+  await orderHistory4.update({currentPrice: prod1.price})
+
+  const orderHistory3 = await OrderHistory.findOne({
+    where: {
+      productId: prod3.id,
+      orderId: order3.id
+    }
+  })
+  await orderHistory3.update({currentPrice: prod3.price})
 
   console.log(`seeded successfully`)
 }

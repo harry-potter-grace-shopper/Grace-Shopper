@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   getGuestCartThunk,
-  guestCheckoutThunk,
   removeFromGuestCartThunk,
   increaseQtyThunk,
   decreaseQtyThunk
@@ -10,8 +9,16 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
 class GuestCart extends React.Component {
-  async componentDidMount() {
+  componentDidMount() {
     this.props.getGuestCart()
+  }
+
+  getTots() {
+    const tots = this.props.products.cart.reduce(
+      (acc, val) => acc + val.price * val.quantity,
+      0
+    )
+    return tots
   }
 
   render() {
@@ -24,10 +31,6 @@ class GuestCart extends React.Component {
         </div>
       )
     } else {
-      const tots = products.cart.reduce(
-        (acc, val) => acc + val.price * val.quantity,
-        0
-      )
       return (
         <div className="cart-page">
           <h1>My Cart</h1>
@@ -65,7 +68,7 @@ class GuestCart extends React.Component {
               </div>
             ))}
           </div>
-          <h2>Total: ${tots}.00</h2>
+          <h2>Total: ${this.getTots()}.00</h2>
           <Link to="/guest/cart/checkout">
             <button type="submit">Checkout</button>
           </Link>

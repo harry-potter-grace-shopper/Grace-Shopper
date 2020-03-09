@@ -35,6 +35,28 @@ router.get('/:userId', adminOrCurrentUser, async (req, res, next) => {
   }
 })
 
+//incrementing and decrementing the cart
+router.put('/:userId/cart/:action', currentUserOnly, async (req, res, next) => {
+  try {
+    const {productId, orderId} = req.body
+    const orderItem = await OrderHistory.findOne({
+      where: {
+        productId: productId,
+        orderId: orderId
+      }
+    })
+    if (req.params.action === 'add') {
+      await orderItem.increment('quantity')
+    }
+    if (req.params.action === 'remove') {
+      await orderItem.decrement('quantity')
+    }
+    res.json(orderItem)
+  } catch (e) {
+    next(e)
+  }
+})
+
 ////adding product to the cart
 router.put('/:userId/cart', currentUserOnly, async (req, res, next) => {
   try {
@@ -42,25 +64,10 @@ router.put('/:userId/cart', currentUserOnly, async (req, res, next) => {
     const currentOrder = await Order.findOne({
       where: {userId: req.params.userId, completed: false}
     })
-    const orderItem = await OrderHistory.findOne({
-      where: {
-        productId: currentProduct.id,
-        orderId: currentOrder.id
-      }
+    await currentOrder.addProduct(currentProduct, {
+      currentPrice: currentProduct.price
     })
-    if (orderItem) {
-      res.sendStatus('already in your cart')
-    } else {
-      await currentOrder.addProduct(currentProduct)
-      const cartItem = await OrderHistory.findOne({
-        where: {
-          productId: currentProduct.id,
-          orderId: currentOrder.id
-        }
-      })
-      await cartItem.update({currentPrice: currentProduct.price})
-      res.json(currentProduct)
-    }
+    res.json(currentProduct)
   } catch (error) {
     next(error)
   }
@@ -125,6 +132,22 @@ router.get('/:userId/cart', currentUserOnly, async (req, res, next) => {
     next(error)
   }
 })
+
+router.get(
+  '/:userId/ordersHistory',
+  currentUserOnly,
+  async (req, res, next) => {
+    try {
+      const oldOrders = await Order.findAll({
+        where: {userId: req.params.userId, completed: true},
+        include: {model: Product}
+      })
+      res.json(oldOrders)
+    } catch (error) {
+      next(error)
+    }
+  }
+)
 
 /*
 navigating the cartItems array :
