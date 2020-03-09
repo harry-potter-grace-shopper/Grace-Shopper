@@ -23,7 +23,6 @@ class SingleProduct extends React.Component {
             <h2>{product.name}</h2>
             <p>{product.description}</p>
             <h3>${product.price}.00</h3>
-            <h3>Color:{product.color}</h3>
             {user.id && !user.admin ? (
               <button
                 type="submit"

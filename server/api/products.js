@@ -1,7 +1,5 @@
 const router = require('express').Router()
 const {Product} = require('../db/models')
-const Sequelize = require('sequelize')
-const Op = Sequelize.Op
 
 const {adminsOnly} = require('../utils')
 
@@ -22,21 +20,6 @@ router.param('id', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll()
-    res.json(products)
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.get('/inStock', async (req, res, next) => {
-  try {
-    const products = await Product.findAll({
-      where: {
-        inventory: {
-          [Op.gte]: 1
-        }
-      }
-    })
     res.json(products)
   } catch (error) {
     next(error)
