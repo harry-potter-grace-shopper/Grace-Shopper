@@ -43,6 +43,23 @@ router.get('/inStock', async (req, res, next) => {
   }
 })
 
+router.get('/:color', async (req, res, next) => {
+  try {
+    const sameColorItems = await Product.findAll({
+      where: {color: req.params.color}
+    })
+    if (sameColorItems) {
+      res.json(sameColorItems)
+    } else {
+      const error = new Error('This color product does not exist defined')
+      error.status = 404
+      next(error)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get('/:id', (req, res, next) => {
   try {
     if (req.product) {

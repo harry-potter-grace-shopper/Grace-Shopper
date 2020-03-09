@@ -15,7 +15,7 @@ class AllProducts extends React.Component {
     return (
       <div>
         <div>
-          <Link to="/instock">Back to All Products</Link>
+          <Link to="/products">Back to All Products</Link>
         </div>
         {user.admin ? <CreateProduct /> : <div />}
         <div className="in-stock-products-page">

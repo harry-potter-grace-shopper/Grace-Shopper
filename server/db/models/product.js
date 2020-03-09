@@ -36,14 +36,14 @@ const Product = db.define('product', {
     type: Sequelize.ENUM(
       'Black',
       'Blue',
-      'White',
-      'Red',
-      'Orange',
-      'Yellow',
-      'Pink',
       'Green',
+      'Orange',
+      'Pink',
       'Purple',
-      'Silver'
+      'Red',
+      'Silver',
+      'White',
+      'Yellow'
     )
   }
 })

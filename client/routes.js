@@ -13,6 +13,7 @@ import OrderConfirmation from './components/OrderConfirmation'
 import GuestCart from './components/GuestCart'
 import GuestCheckout from './components/GuestCheckout'
 import InStock from './components/InStock'
+import SingleColorProducts from './components/SingleColorProducts'
 
 /**
  * COMPONENT
@@ -34,6 +35,7 @@ class Routes extends Component {
         <Route path="/products/:id" component={SingleProduct} />
         <Route exact path="/" component={AllProducts} />
         <Route exact path="/instock" component={InStock} />
+        <Route path="/:color" component={SingleColorProducts} />
         <Route exact path="/home" component={AllProducts} />
         <Route exact path="/guest/cart" component={GuestCart} />
         <Route exact path="/guest/cart/checkout" component={GuestCheckout} />

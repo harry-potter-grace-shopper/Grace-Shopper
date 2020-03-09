@@ -80,6 +80,18 @@ nav a {
   color: black;
 }
 
+.in-stock-products-page {
+  margin-top: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+.in-stock-products-page a:visited {
+  color: black;
+}
+
 .single-product-card {
   display: flex;
   flex-direction: column;
