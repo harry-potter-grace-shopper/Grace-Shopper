@@ -3,7 +3,6 @@ import {SingleProductCard} from './SingleProductCard'
 import {connect} from 'react-redux'
 import {getProductsThunk} from '../store/products'
 import CreateProduct from './CreateProduct'
-import {Link} from 'react-router-dom'
 
 class AllProducts extends React.Component {
   componentDidMount() {
@@ -14,10 +13,6 @@ class AllProducts extends React.Component {
     const {products, user} = this.props
     return (
       <div>
-        <div>
-          <p>Click for Categories:</p>
-          <Link to="/instock">In Stock Items</Link>
-        </div>
         {user.admin ? <CreateProduct /> : <div />}
         <div className="all-products-page">
           {products.map(product => {

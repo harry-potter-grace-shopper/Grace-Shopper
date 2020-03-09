@@ -12,7 +12,6 @@ import Checkout from './components/Checkout'
 import OrderConfirmation from './components/OrderConfirmation'
 import GuestCart from './components/GuestCart'
 import GuestCheckout from './components/GuestCheckout'
-import InStock from './components/InStock'
 
 /**
  * COMPONENT
@@ -33,7 +32,6 @@ class Routes extends Component {
         <Route exact path="/products" component={AllProducts} />
         <Route path="/products/:id" component={SingleProduct} />
         <Route exact path="/" component={AllProducts} />
-        <Route exact path="/instock" component={InStock} />
         <Route exact path="/home" component={AllProducts} />
         <Route exact path="/guest/cart" component={GuestCart} />
         <Route exact path="/guest/cart/checkout" component={GuestCheckout} />
