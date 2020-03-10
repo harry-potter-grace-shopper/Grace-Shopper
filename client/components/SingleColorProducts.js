@@ -21,7 +21,7 @@ class AllProducts extends React.Component {
         </div>
         {user.admin ? <CreateProduct /> : <div />}
         <div className="in-stock-products-page">
-          {productsByColor.length > 1 ? (
+          {productsByColor.length > 0 ? (
             productsByColor.map(product => {
               return (
                 <SingleProductCard
