@@ -21,6 +21,14 @@ class MyAccount extends React.Component {
             Name: {this.props.user.firstName} {this.props.user.lastName}
           </p>
           <p>Email: {this.props.user.email}</p>
+
+          <div>
+            <Link to={`/${this.props.user.id}/myaccount/edit`}>
+              <button onClick={this.handleSubmit} type="button">
+                Edit Account Info
+              </button>
+            </Link>
+          </div>
         </div>
 
         <div className="order-history-page">

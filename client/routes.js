@@ -15,6 +15,7 @@ import GuestCheckout from './components/GuestCheckout'
 import InStock from './components/InStock'
 import SingleColorProducts from './components/SingleColorProducts'
 import MyAccount from './components/MyAccount'
+import EditAccountForm from './components/EditAccountForm'
 
 /**
  * COMPONENT
@@ -47,9 +48,16 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
+
             <Route path="/home" component={UserHome} />
             <Route exact path="/:userid/cart" component={Cart} />
             <Route exact path="/:userid/cart/checkout" component={Checkout} />
+            <Route
+              exact
+              path="/:userid/myaccount/edit"
+              component={EditAccountForm}
+            />
+
             {user.admin ? (
               <Route exact path="/users" component={AllUsers} />
             ) : (

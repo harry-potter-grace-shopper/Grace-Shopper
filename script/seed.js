@@ -113,7 +113,7 @@ async function seed() {
     imageUrl:
       'https://images-na.ssl-images-amazon.com/images/I/71qgskHqfhL._AC_SL1389_.jpg',
     inventory: 9000,
-    color: 'Purple'
+    color: 'White'
   })
 
   const order1 = await Order.create({

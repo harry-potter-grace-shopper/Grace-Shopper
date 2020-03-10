@@ -7,7 +7,12 @@ class Checkout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      fields: {},
+      fields: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        address: ''
+      },
       errors: {}
     }
     this.handleChange = this.handleChange.bind(this)
@@ -179,7 +184,11 @@ class Checkout extends React.Component {
           </div>
 
           <div className="checkout-section">
-            <button type="submit" onClick={this.handleSubmit}>
+            <button
+              type="submit"
+              className="checkout-button"
+              onClick={this.handleSubmit}
+            >
               Place Order
             </button>
           </div>
