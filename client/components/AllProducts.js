@@ -29,9 +29,7 @@ class AllProducts extends React.Component {
       <div>
         <div className="categories">
           <p>Click for Categories:</p>
-          <Link exact to="/categories/instock">
-            In Stock Items
-          </Link>
+          <Link to="/categories/instock">In Stock Items</Link>
           <Link to="/categories/singleColor/Black">Black</Link>
           <Link to="/categories/singleColor/Blue">Blue</Link>
           <Link to="/categories/singleColor/Green">Green</Link>
