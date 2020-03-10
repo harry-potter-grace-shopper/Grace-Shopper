@@ -41,6 +41,7 @@ class Cart extends React.Component {
 
   render() {
     const products = this.props.products
+    console.log(products)
     if (products.length === 0)
       return (
         <div className="cart-page">

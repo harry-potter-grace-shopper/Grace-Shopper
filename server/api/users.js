@@ -67,7 +67,22 @@ router.put('/:userId/cart', currentUserOnly, async (req, res, next) => {
     await currentOrder.addProduct(currentProduct, {
       currentPrice: currentProduct.price
     })
-    res.json(currentProduct)
+    const newProduct = await Product.findByPk(req.body.id, {
+      include: {
+        model: Order
+      }
+    })
+    const orderItem = await OrderHistory.findOne({
+      where: {
+        productId: req.body.id,
+        orderId: currentOrder.id
+      }
+    })
+    if (req.body.quantity) {
+      const newQty = req.body.quantity + orderItem.quantity - 1
+      await orderItem.update({quantity: newQty})
+    }
+    res.json(newProduct)
   } catch (error) {
     next(error)
   }
