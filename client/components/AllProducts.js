@@ -19,7 +19,7 @@ class AllProducts extends React.Component {
   paginate = pageNumber => this.setState({currentPage: pageNumber})
 
   render() {
-    const {products, user} = this.props
+    const {user, products} = this.props
     const totalItems = products.length
     const itemsPerPage = 4
     const indexOfLastItem = this.state.currentPage * itemsPerPage
