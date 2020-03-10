@@ -61,7 +61,7 @@ class Cart extends React.Component {
                   </Link>
                 </div>
                 <div className="cart-details">
-                  <h3>{product.name}</h3>
+                  <h2>{product.name}</h2>
                   <p>Quantity: {product.orders[0].order_history.quantity}</p>
                   <button
                     type="button"
@@ -94,10 +94,15 @@ class Cart extends React.Component {
               </div>
             ))}
           </div>
-          <h2>Total: ${this.getTots()}.00</h2>
-          <Link to={`/${this.props.user.id}/cart/checkout`}>
-            <button type="submit">Checkout</button>
-          </Link>
+
+          <div className="cart-total">
+            <h2>Order Total: ${this.getTots()}.00</h2>
+            <Link to={`/${this.props.user.id}/cart/checkout`}>
+              <button type="submit" className="checkout-button">
+                Checkout
+              </button>
+            </Link>
+          </div>
         </div>
       )
     }

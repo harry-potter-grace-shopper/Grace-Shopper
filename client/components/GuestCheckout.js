@@ -168,7 +168,11 @@ class GuestCheckout extends React.Component {
           </div>
 
           <div className="checkout-section">
-            <button type="submit" onClick={this.handleSubmit}>
+            <button
+              type="submit"
+              className="checkout-button"
+              onClick={this.handleSubmit}
+            >
               Place Order
             </button>
           </div>

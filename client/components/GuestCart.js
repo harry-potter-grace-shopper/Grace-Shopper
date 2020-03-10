@@ -68,10 +68,15 @@ class GuestCart extends React.Component {
               </div>
             ))}
           </div>
-          <h2>Total: ${this.getTots()}.00</h2>
-          <Link to="/guest/cart/checkout">
-            <button type="submit">Checkout</button>
-          </Link>
+
+          <div className="cart-total">
+            <h2>Order Total: ${this.getTots()}.00</h2>
+            <Link to="/guest/cart/checkout">
+              <button type="submit" className="checkout-button">
+                Checkout
+              </button>
+            </Link>
+          </div>
         </div>
       )
     }

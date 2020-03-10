@@ -164,6 +164,24 @@ router.get(
   }
 )
 
+//update user account
+
+router.put('/:userId/', currentUserOnly, async (req, res, next) => {
+  try {
+    const updatedUser = await User.findByPk(req.params.userId)
+    await updatedUser.update(req.body)
+    if (updatedUser) {
+      res.status(200).json(updatedUser)
+    } else {
+      const error = new Error('Failed to update user')
+      error.status = 500
+      throw error
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
 /*
 navigating the cartItems array :
 product id = cartItem.id,
