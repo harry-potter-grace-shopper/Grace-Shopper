@@ -17,6 +17,13 @@ class EditAccountForm extends React.Component {
 
   componentDidMount() {
     this.props.getUserInfo()
+    if (this.props.user.id) {
+      this.setState({
+        firstName: this.props.user.firstName,
+        lastName: this.props.user.lastName,
+        email: this.props.user.email
+      })
+    }
   }
 
   handleChange = event => {
