@@ -7,12 +7,7 @@ class Checkout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      fields: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        address: ''
-      },
+      fields: {},
       errors: {}
     }
     this.handleChange = this.handleChange.bind(this)
@@ -26,8 +21,6 @@ class Checkout extends React.Component {
 
     if (this.props.user.id) {
       this.setState({
-        firstName: this.props.user.firstName,
-        lastName: this.props.user.lastName,
         email: this.props.user.email
       })
     }
