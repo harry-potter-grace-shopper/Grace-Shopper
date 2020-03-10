@@ -15,6 +15,16 @@ const getCart = cart => ({
 export const getCartThunk = userId => {
   return async dispatch => {
     try {
+      const guestCart = JSON.parse(localStorage.getItem('shoppingCart'))
+      if (guestCart) {
+        guestCart.forEach(async item => {
+          await axios.put(`/api/users/${userId}/cart`, {
+            id: item.id,
+            quantity: item.quantity
+          })
+        })
+        localStorage.setItem('shoppingCart', JSON.stringify(0))
+      }
       const {data} = await axios.get(`/api/users/${userId}/cart`)
       dispatch(getCart(data))
     } catch (error) {
