@@ -67,7 +67,12 @@ router.put('/:userId/cart', currentUserOnly, async (req, res, next) => {
     await currentOrder.addProduct(currentProduct, {
       currentPrice: currentProduct.price
     })
-    res.json(currentProduct)
+    const newProduct = await Product.findByPk(req.body.id, {
+      include: {
+        model: Order
+      }
+    })
+    res.json(newProduct)
   } catch (error) {
     next(error)
   }
