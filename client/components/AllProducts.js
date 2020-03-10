@@ -16,17 +16,19 @@ class AllProducts extends React.Component {
       <div>
         <div>
           <p>Click for Categories:</p>
-          <Link to="/instock">In Stock Items</Link>
-          <Link to="/Black">Black</Link>
-          <Link to="/Blue">Blue</Link>
-          <Link to="/Green">Green</Link>
-          <Link to="/Orange">Orange</Link>
-          <Link to="/Pink">Pink</Link>
-          <Link to="/Purple">Purple</Link>
-          <Link to="/Red">Red</Link>
-          <Link to="/Silver">Silver</Link>
-          <Link to="/White">White</Link>
-          <Link to="/Yellow">Yellow</Link>
+          <Link exact to="/categories/instock">
+            In Stock Items
+          </Link>
+          <Link to="/categories/singleColor/Black">Black</Link>
+          <Link to="/categories/singleColor/Blue">Blue</Link>
+          <Link to="/categories/singleColor/Green">Green</Link>
+          <Link to="/categories/singleColor/Orange">Orange</Link>
+          <Link to="/categories/singleColor/Pink">Pink</Link>
+          <Link to="/categories/singleColor/Purple">Purple</Link>
+          <Link to="/categories/singleColor/Red">Red</Link>
+          <Link to="/categories/singleColor/Silver">Silver</Link>
+          <Link to="/categories/singleColor/White">White</Link>
+          <Link to="/categories/singleColor/Yellow">Yellow</Link>
         </div>
         {user.admin ? <CreateProduct /> : <div />}
         <div className="all-products-page">

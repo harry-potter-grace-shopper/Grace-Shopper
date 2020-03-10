@@ -10,10 +10,10 @@ const getProductsByColor = sameColorProducts => ({
 export const getProductsByColorThunk = color => {
   return async dispatch => {
     try {
-      const {data} = await axios.get(`/api/products/${color}`)
+      const {data} = await axios.get(`/api/categories/singleColor/${color}`)
       dispatch(getProductsByColor(data))
     } catch (e) {
-      console.log('Failed to GET /api/products/color', e)
+      console.log('Failed to GET /api/categories/singleColor/:color', e)
     }
   }
 }

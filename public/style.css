@@ -258,3 +258,10 @@ nav a {
   padding-left: 60px;
   padding-right: 60px;
 }
+
+/* CATEGORIES STYLING */
+.categories {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}

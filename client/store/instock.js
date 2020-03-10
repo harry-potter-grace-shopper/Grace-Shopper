@@ -10,10 +10,10 @@ const getInStockProducts = inStockProducts => ({
 export const getInStockProductsThunk = () => {
   return async dispatch => {
     try {
-      const {data} = await axios.get('/api/products/instock')
+      const {data} = await axios.get('/api/categories/instock')
       dispatch(getInStockProducts(data))
     } catch (error) {
-      console.log('Failed to GET /api/products/instock', error)
+      console.log('Failed to GET /api/categories/instock', error)
     }
   }
 }
