@@ -259,6 +259,25 @@ nav a {
   padding-right: 60px;
 }
 
+#pagination {
+  display: flex;
+  justify-content: center;
+}
+
+#page-item {
+  font-weight: bold;
+  font-size: 20px;
+  color: black;
+  float: left;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  background-color: lightcoral;
+}
+#page-item:active {
+  border-radius: 5px;
+  background-color: #990033;
+}
+
 /* CATEGORIES STYLING */
 .categories {
   display: flex;
