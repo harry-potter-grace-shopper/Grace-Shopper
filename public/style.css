@@ -80,6 +80,18 @@ nav a {
   color: black;
 }
 
+.in-stock-products-page {
+  margin-top: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+.in-stock-products-page a:visited {
+  color: black;
+}
+
 .single-product-card {
   display: flex;
   flex-direction: column;
@@ -264,4 +276,32 @@ nav a {
 #page-item:active {
   border-radius: 5px;
   background-color: #990033;
+}
+
+/* CATEGORIES STYLING */
+.categories {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.category-items {
+  margin: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+  /* align-items: center; */
+}
+
+.category-items a {
+  margin: 1rem;
+  display: inline-block;
+  justify-content: space-evenly;
+  /* align-items: center; */
+  text-decoration: underline;
+  font-size: 14px;
+  flex: wrap;
+}
+
+a:hover {
+  color: red;
 }

@@ -12,7 +12,7 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
           {/* The navbar will show these links after you log in */}
 
           <div>
-            <Link to="/home">
+            <Link to="/">
               <img
                 src="https://www.logolynx.com/images/logolynx/d4/d429675b3b80e9cae4ab2f1dc734926a.gif"
                 width="200px"
