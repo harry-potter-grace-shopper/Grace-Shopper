@@ -43,7 +43,7 @@ button:hover {
 
 #nav-bar {
   /* background: rgb(196, 95, 117); */
-  height: 5.5em;
+  height: 7em;
   text-align: center;
 }
 
@@ -217,7 +217,17 @@ nav a {
   padding: 1rem;
 }
 
-/* ORDER HISTORY */
+/* ORDER HISTORY & ACCOUNT OVERVIEW */
+
+.account-details {
+  align-items: center;
+  width: 500px;
+  margin: 1rem;
+  padding: 3rem;
+  -webkit-box-shadow: -3px 11px 32px 0px rgba(209, 209, 209, 1);
+  -moz-box-shadow: -3px 11px 32px 0px rgba(209, 209, 209, 1);
+  box-shadow: -3px 11px 32px 0px rgba(209, 209, 209, 1);
+}
 
 .old-order-details {
   display: flex;
@@ -244,12 +254,14 @@ nav a {
 
 .order-history-item {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   padding-top: 50px;
   padding-bottom: 50px;
+  line-height: 30px;
 }
 
 .order-history-details {
+  align-items: center;
   margin-left: 3rem;
   padding: 1rem;
 }

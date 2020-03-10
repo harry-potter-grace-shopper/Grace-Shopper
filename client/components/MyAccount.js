@@ -1,32 +1,36 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {me} from '../store'
 import {getOrdersHistoryThunk} from '../store/orderHistory'
 
-class OrderHistory extends React.Component {
+class MyAccount extends React.Component {
   componentDidMount() {
     const userId = this.props.match.params.userId
     this.props.getOrdersHistory(userId)
+    this.props.getUserInfo()
   }
 
   render() {
     const {orders} = this.props
     return (
       <div className="page-container">
-        <div>
-          <h1>Account Overview</h1>
-          <p>Name: </p>
-          <p>Email: </p>
+        <h1>Account Overview</h1>
+        <div className="account-details">
+          <p>
+            Name: {this.props.user.firstName} {this.props.user.lastName}
+          </p>
+          <p>Email: {this.props.user.email}</p>
         </div>
 
         <div className="order-history-page">
-          <h2>My Orders</h2>
+          <h1>Order History</h1>
 
           <ol className="order-history-container">
             {orders.map(order => {
               return (
                 <li key={order.id} className="order-history-item">
-                  <p>Order Date: {order.products[0].order_history.date}</p>
+                  <p>Date: {order.products[0].order_history.date}</p>
                   {order.products.map(item => {
                     return (
                       <div key={item.id}>
@@ -55,11 +59,13 @@ class OrderHistory extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  user: state.user,
   orders: state.ordersHistory
 })
 
 const mapDispatchToProps = dispatch => ({
+  getUserInfo: () => dispatch(me()),
   getOrdersHistory: userId => dispatch(getOrdersHistoryThunk(userId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderHistory)
+export default connect(mapStateToProps, mapDispatchToProps)(MyAccount)

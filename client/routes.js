@@ -14,7 +14,7 @@ import GuestCart from './components/GuestCart'
 import GuestCheckout from './components/GuestCheckout'
 import InStock from './components/InStock'
 import SingleColorProducts from './components/SingleColorProducts'
-import OrderHistory from './components/OrderHistory'
+import MyAccount from './components/MyAccount'
 
 /**
  * COMPONENT
@@ -55,8 +55,8 @@ class Routes extends Component {
             ) : (
               <Route
                 exact
-                path="/users/:userId/ordersHistory"
-                component={OrderHistory}
+                path="/users/:userId/myaccount"
+                component={MyAccount}
               />
             )}
           </Switch>
