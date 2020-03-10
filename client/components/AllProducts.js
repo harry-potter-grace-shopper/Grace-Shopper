@@ -3,6 +3,7 @@ import {SingleProductCard} from './SingleProductCard'
 import {connect} from 'react-redux'
 import {getProductsThunk} from '../store/products'
 import CreateProduct from './CreateProduct'
+import {Link} from 'react-router-dom'
 import {Pagination} from './Pagination'
 
 class AllProducts extends React.Component {
@@ -11,6 +12,7 @@ class AllProducts extends React.Component {
     this.state = {currentPage: 1}
     this.paginate = this.paginate.bind(this)
   }
+
   componentDidMount() {
     this.props.getProducts()
   }
@@ -23,9 +25,24 @@ class AllProducts extends React.Component {
     const indexOfLastItem = this.state.currentPage * itemsPerPage
     const indexOfFirstItem = indexOfLastItem - itemsPerPage
     const currentItems = products.slice(indexOfFirstItem, indexOfLastItem)
-
     return (
       <div>
+        <div className="categories">
+          <p>Click for Categories:</p>
+          <Link exact to="/categories/instock">
+            In Stock Items
+          </Link>
+          <Link to="/categories/singleColor/Black">Black</Link>
+          <Link to="/categories/singleColor/Blue">Blue</Link>
+          <Link to="/categories/singleColor/Green">Green</Link>
+          <Link to="/categories/singleColor/Orange">Orange</Link>
+          <Link to="/categories/singleColor/Pink">Pink</Link>
+          <Link to="/categories/singleColor/Purple">Purple</Link>
+          <Link to="/categories/singleColor/Red">Red</Link>
+          <Link to="/categories/singleColor/Silver">Silver</Link>
+          <Link to="/categories/singleColor/White">White</Link>
+          <Link to="/categories/singleColor/Yellow">Yellow</Link>
+        </div>
         {user.admin ? <CreateProduct /> : <div />}
         <div className="all-products-page">
           {currentItems.map(product => {
