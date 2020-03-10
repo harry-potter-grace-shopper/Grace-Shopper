@@ -1,5 +1,6 @@
 const path = require('path')
 const express = require('express')
+const helmet = require('helmet')
 const morgan = require('morgan')
 const compression = require('compression')
 const session = require('express-session')
@@ -41,6 +42,9 @@ passport.deserializeUser(async (id, done) => {
 })
 
 const createApp = () => {
+  // secures routes with various HTTP headers
+  app.use(helmet())
+
   // logging middleware
   app.use(morgan('dev'))
 
