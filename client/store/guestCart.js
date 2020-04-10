@@ -27,9 +27,9 @@ const addToGuestCart = newCart => ({
 })
 
 export const addToGuestCartThunk = product => {
-  return async dispatch => {
+  return dispatch => {
     try {
-      let cart = await JSON.parse(localStorage.getItem('shoppingCart'))
+      let cart = JSON.parse(localStorage.getItem('shoppingCart'))
       if (cart) {
         const idArr = [...cart].map(item => item.id)
         if (!idArr.includes(product.id)) cart.push({...product, quantity: 1})
@@ -37,7 +37,7 @@ export const addToGuestCartThunk = product => {
         cart = []
         cart.push({...product, quantity: 1})
       }
-      await localStorage.setItem('shoppingCart', JSON.stringify(cart))
+      localStorage.setItem('shoppingCart', JSON.stringify(cart))
       dispatch(addToGuestCart(cart))
     } catch (error) {
       console.log('Error with adding to the cart', error)
@@ -51,9 +51,9 @@ const increaseQty = newCart => ({
 })
 
 export const increaseQtyThunk = prodId => {
-  return async dispatch => {
+  return dispatch => {
     try {
-      const cart = await JSON.parse(localStorage.getItem('shoppingCart'))
+      const cart = JSON.parse(localStorage.getItem('shoppingCart'))
       cart.filter(item => {
         if (item.id === prodId) return (item.quantity = item.quantity + 1)
       })
@@ -71,9 +71,9 @@ const decreaseQty = newCart => ({
 })
 
 export const decreaseQtyThunk = prodId => {
-  return async dispatch => {
+  return dispatch => {
     try {
-      const cart = await JSON.parse(localStorage.getItem('shoppingCart'))
+      const cart = JSON.parse(localStorage.getItem('shoppingCart'))
       cart.filter(item => {
         if (item.id === prodId) {
           if (item.quantity !== 1) {
@@ -95,9 +95,9 @@ const removeFromGuestCart = newCart => ({
 })
 
 export const removeFromGuestCartThunk = productId => {
-  return async dispatch => {
+  return dispatch => {
     try {
-      const cart = await JSON.parse(localStorage.getItem('shoppingCart'))
+      const cart = JSON.parse(localStorage.getItem('shoppingCart'))
       const newCart = cart.filter(item => {
         if (item.id !== productId) return item
       })
