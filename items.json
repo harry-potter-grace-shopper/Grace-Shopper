@@ -1,0 +1,67 @@
+{
+  "tamagotchis": [
+    {
+      "id": 1,
+      "name": "Purple Magic",
+      "price": 51,
+      "imageUrl":
+        "https://images-na.ssl-images-amazon.com/images/I/71b84TxN1BL._AC_SX679_.jpg"
+    },
+    {
+      "id": 2,
+      "name": "White Magic",
+      "price": 51,
+      "imageUrl":
+        "https://images-na.ssl-images-amazon.com/images/I/716Nk-BMlTL._AC_SX569_.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Green Magic",
+      "price": 47,
+      "imageUrl":
+        "https://images-na.ssl-images-amazon.com/images/I/61vT7Txan5L._AC_SX679_.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Ban Dai",
+      "price": 21,
+      "imageUrl":
+        "https://images-na.ssl-images-amazon.com/images/I/61PyNKmgveL._AC_SL1500_.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Purple Japan Tama",
+      "price": 57,
+      "imageUrl":
+        "https://images-na.ssl-images-amazon.com/images/I/7181ooeU4lL._AC_SL1000_.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Meets Fantasy Purple",
+      "price": 60,
+      "imageUrl":
+        "https://images-na.ssl-images-amazon.com/images/I/91pVoAiJ%2BVL._AC_SL1500_.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Chansey Check!",
+      "price": 51,
+      "imageUrl":
+        "https://images-na.ssl-images-amazon.com/images/I/61Z%2Bx8Kus4L._AC_SL1000_.jpg"
+    },
+    {
+      "id": 8,
+      "name": "4U Purple",
+      "price": 69,
+      "imageUrl":
+        "https://images-na.ssl-images-amazon.com/images/I/71FKOH7KBkL._AC_SL1370_.jpg"
+    },
+    {
+      "id": 8,
+      "name": "4U White",
+      "price": 69,
+      "imageUrl":
+        "https://images-na.ssl-images-amazon.com/images/I/71qgskHqfhL._AC_SL1389_.jpg"
+    }
+  ]
+}
