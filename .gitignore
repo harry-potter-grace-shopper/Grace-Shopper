@@ -5,4 +5,4 @@ secrets.js
 .DS_Store
 npm-debug.log
 yarn-error.log
-/script/seed.js
+script/seed.js
