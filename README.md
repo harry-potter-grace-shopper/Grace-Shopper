@@ -22,7 +22,7 @@ You have installed the latest version of `npm`
 
 ```
 npm install
-npm start dev
+npm run start-dev
 ```
 
 This starts the web application on [localhost:8080](http://localhost:8080/)
@@ -31,7 +31,7 @@ This starts the web application on [localhost:8080](http://localhost:8080/)
 
 ## Store front
 
-![Store Front](img/storeFront.mov)
+[![Store Front](img/storeFront.mov)]
 Upon opening the page, the user will be presented with the product dashboard.
 
 On this page, the user will see all of the Tamagotchis available for purchase in the center of the page. Pagination was used to simplify the display. You can also filter you search by selecting the Tamagotchi color. From here, users can select each toy for further information and add them to their cart.
