@@ -22,7 +22,7 @@ You have installed the latest version of `npm`
 
 ```
 npm install
-npm start dev
+npm run start-dev
 ```
 
 This starts the web application on [localhost:8080](http://localhost:8080/)
