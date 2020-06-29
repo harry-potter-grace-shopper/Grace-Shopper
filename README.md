@@ -1,16 +1,22 @@
+<p align="center">
+  <img src="https://www.logolynx.com/images/logolynx/d4/d429675b3b80e9cae4ab2f1dc734926a.gif">
+</p>
+
+
+
 # Tamagotchi Store
 
 Welcome to our Tamagotchi Store: an e-commerce web application that sells Tamagotchis to users/guests and allows shop-front management for admins.
 
 Users can create an account and revisit a persistent cart of saved items.
 
-See the launched site [here](https://tamagotchi-store.herokuapp.com/home)
+See the launched site [here](https://tamagotchi-store.herokuapp.com/home) :tada:
 
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
 
-You have installed the latest version of `npm`
+You have installed the latest version of `node.js` and `javascript`
 
 ## How to Install
 
@@ -31,7 +37,6 @@ This starts the web application on [localhost:8080](http://localhost:8080/)
 
 ## Store front
 
-![Store Front](img/storeFront.mov)
 Upon opening the page, the user will be presented with the product dashboard.
 
 On this page, the user will see all of the Tamagotchis available for purchase in the center of the page. Pagination was used to simplify the display. You can also filter you search by selecting the Tamagotchi color. From here, users can select each toy for further information and add them to their cart.
@@ -55,4 +60,7 @@ Built using Express, React, Redux, Sequelize and Node.js.
 
 # Creators
 
-Aleksandra Bardymova @AleksandraBard, Yumiko Mannarelli @yumiko2695, Lilly Oh @lillyoh & Martha Betterton @m-bettert0n
+:star2:[Aleksandra Bardymova](https://github.com/AleksandraBard) @AleksandraBard,<br>
+:star2:[Yumiko Mannarelli](https://github.com/yumiko2695) @yumiko2695,<br> 
+:star2:[Lilly Oh](https://github.com/lillyoh) @lillyoh,<br> 
+:star2:[Martha Betterton](https://github.com/m-bettert0n) @m-bettert0n
